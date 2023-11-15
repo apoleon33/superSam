@@ -6,18 +6,18 @@ class Coordinate:
         self.__x = x
         self.__y = y
 
-    def setCoordinates(self, x: int, y: int) -> None:
-        self.setX(x)
-        self.setY(y)
-
-    def getX(self) -> int:
+    @property
+    def X(self) -> int:
         return self.__x
 
-    def setX(self, x: int) -> None:
+    @X.setter
+    def X(self, x: int) -> None:
         self.__x = x
 
-    def getY(self) -> int:
+    @property
+    def Y(self) -> int:
         return self.__y
 
-    def setY(self, y: int) -> int:
+    @Y.setter
+    def Y(self, y: int) -> None:
         self.__y = y

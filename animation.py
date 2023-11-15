@@ -4,7 +4,7 @@ from image import Image
 class Animation:
     __images: [Image]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__images = []
 
     def getFrame(self, i: int) -> Image:
@@ -13,5 +13,5 @@ class Animation:
     def addFrame(self, image: Image) -> None:
         self.__images.append(image)
 
-    def removeFrame(self):
+    def removeFrame(self) -> None:
         del self.__images[-1]
