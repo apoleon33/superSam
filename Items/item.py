@@ -17,8 +17,15 @@ class Item:
     def getCoordinate(self) -> tuple:
         return tuple([self.__coordinate.getX(), self.__coordinate.getY()])
 
+    def changeCoordinate(self, x: int, y: int) -> None:
+        self.__coordinate.X = x
+        self.__coordinate.Y = y
+
     @abstractmethod
     def action(self):
+        """
+        Méthode appelée lorsqu'un joueur active l'item depuis sont inventaire
+        """
         pass
 
     def getName(self) -> str:
