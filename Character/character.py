@@ -1,25 +1,28 @@
+from Character.behaviorMove.behaviorMove import BehaviorMove
 from animation import Animation
+from animationSet import AnimationSet
 from coordinate import Coordinate
 
 
 class Character:
-    __moveAnimation: Animation
+    __name: str
     __coordinate: Coordinate
-    __jumpAnimation: Animation
+    __behaviorMove: BehaviorMove
+    __animationSet: AnimationSet
+    __jumpStatus: bool
 
-    def __init__(self, moveAnimation: Animation, coordinate: Coordinate, jumpAnimation: Animation) -> None:
-        self.__moveAnimation = moveAnimation
-        self.__coordinate = coordinate
-        self.__jumpAnimation = jumpAnimation
+    def __init__(self, name: str, animationSet: AnimationSet) -> None:
+        self.__name = name
+        self.__animationSet = animationSet
+
+    def setBehaviorMove(self, behaviorMove: BehaviorMove) -> None:
+        self.__behaviorMove = behaviorMove
 
     def move_right(self) -> None:
-        pass
+        self.__behaviorMove.move_right()
 
     def move_left(self) -> None:
-        pass
+        self.__behaviorMove.move_left()
 
-    def getMoveAnimation(self) -> Animation:
-        return self.__moveAnimation
-
-    def getJumpAnimation(self) -> Animation:
-        return self.__jumpAnimation
+    def jump(self) -> None:
+        self.__behaviorMove.jump()
