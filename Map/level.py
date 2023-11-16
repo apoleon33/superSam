@@ -25,3 +25,5 @@ class Level():
     def Background(self, background: Image) -> None:
         self.__background = background
 
+    def getName(self) -> str:
+        return self.__name
