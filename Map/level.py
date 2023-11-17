@@ -1,5 +1,6 @@
 from Character.character import Character
 from Items.item import Item
+from Map.tunnel import Tunnel
 from image import Image
 
 

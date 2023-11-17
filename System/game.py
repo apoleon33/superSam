@@ -1,5 +1,6 @@
 from Character.mainCharacter import MainCharacter
 from Map.map import Map
+from System.story import Story
 
 
 class Game:
@@ -8,11 +9,11 @@ class Game:
     __map: Map
     __story: Story
 
-    def __init__(self, map:Map, mainCharacter: MainCharacter):
+    def __init__(self, map: Map, mainCharacter: MainCharacter):
         self.__map = map
         self.__mainCharacter = mainCharacter
-        self.__gravity = 0 # à modifier
-        self.__story = story
+        self.__gravity = 0  # à modifier
+        self.__story = Story()
 
     def displayGame(self):
         pass
