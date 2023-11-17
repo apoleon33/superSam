@@ -19,6 +19,7 @@ class Character:
         self.__behaviorMove = behaviorMove
 
     def move_right(self) -> None:
+        self.__animationSet.MoveRightAnimation.getFrame()
         self.__behaviorMove.move_right()
 
     def move_left(self) -> None:

@@ -27,3 +27,15 @@ class Map:
     @Height.setter
     def Height(self, height: int) -> None:
         self.__height = height
+
+    def addLevel(self, x: int, y: int, level: Level):
+        while y > len(self.__levels):
+            self.__levels.append([])
+
+        while x > len(self.__levels[y]):
+            self.__levels[y].append(EmptyLevel())
+
+        self.__levels[y][x] = level
+
+    def getLevel(self, x: int, y: int) -> Level:
+        return self.__levels[y][x]

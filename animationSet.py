@@ -6,6 +6,11 @@ class AnimationSet:
     __moveLeftAnimation: Animation
     __jumpAnimation: Animation
 
+    def __init__(self):
+        self.__moveRightAnimation = Animation()
+        self.__moveLeftAnimation = Animation()
+        self.__jumpAnimation = Animation()
+
     @property
     def MoveRightAnimation(self) -> Animation:
         return self.__moveRightAnimation

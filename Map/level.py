@@ -4,7 +4,7 @@ from Map.tunnel import Tunnel
 from image import Image
 
 
-class Level():
+class Level:
     __name: str
     __background: Image
     __items: [Item]

@@ -2,6 +2,7 @@ from Character.character import Character
 from Items.inventory import Inventory
 from animationSet import AnimationSet
 from coordinate import Coordinate
+from image import Image
 
 
 class MainCharacter(Character):
@@ -9,5 +10,10 @@ class MainCharacter(Character):
 
     def __init__(self, coordinate: Coordinate):
         moveAnimation = AnimationSet()
-        # ici on ajoutera les différentes animations à la main
+
+        # right animation
+        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/1.png"))
+        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/2.png"))
+        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/3.png"))
+
         super().__init__("Sam", moveAnimation)
