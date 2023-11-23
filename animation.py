@@ -15,3 +15,6 @@ class Animation:
 
     def removeFrame(self) -> None:
         del self.__images[-1]
+
+    def getLenImage(self):
+        return len(self.__images)

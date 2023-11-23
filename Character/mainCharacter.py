@@ -11,9 +11,5 @@ class MainCharacter(Character):
     def __init__(self, coordinate: Coordinate):
         moveAnimation = AnimationSet()
 
-        # right animation
-        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/1.png"))
-        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/2.png"))
-        moveAnimation.MoveRightAnimation.addFrame(Image("assets/character/sam/right/3.png"))
-
+        moveAnimation.setImageFromDirectory("assets/character/sam", [8, 0, 3])
         super().__init__("Sam", moveAnimation)

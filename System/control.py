@@ -13,20 +13,33 @@ class Control:
         self.__jumpKeys = [pygame.K_UP]
         self.__quitKeys = [pygame.QUIT]
 
-    def isAControl(self, key: pygame.constants) -> str | bool:
+    def getLeftKeys(self) -> list:
+        return self.__leftKeys
+
+    def getRightKeys(self) -> list:
+        return self.__rightKeys
+
+    def getJumpKeys(self) -> list:
+        return self.__jumpKeys
+
+    def getQuitKeys(self) -> list:
+        return self.__quitKeys
+
+    def isAControl(self, key) -> str | bool:
         """
         On demande si la touche key est associée à une action.
         Si c'est le cas, on renvoie l'action associée, faux sinon
         """
 
         returnStatus = False
-        if key in self.__rightKeys:
+
+        if key.key in self.__rightKeys:
             returnStatus = "RIGHT"
-        elif key in self.__leftKeys:
+        elif key.key in self.__leftKeys:
             returnStatus = "LEFT"
-        elif key in self.__jumpKeys:
+        elif key.key in self.__jumpKeys:
             returnStatus = "JUMP"
-        elif key in self.__quitKeys:
+        elif key.key in self.__quitKeys:
             returnStatus = "QUIT"
 
         return returnStatus

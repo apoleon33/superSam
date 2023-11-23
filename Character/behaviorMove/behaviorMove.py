@@ -5,6 +5,9 @@ from typing import Any
 class BehaviorMove(ABC):
     __character: Any  # Any pour éviter une dépendance circulaire
 
+    def __init__(self):
+        self.__character = None
+
     @abstractmethod
     def move_right(self) -> None:
         self.__character.coordinate.X += 5

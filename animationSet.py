@@ -1,36 +1,79 @@
 from animation import Animation
+from image import Image
 
 
 class AnimationSet:
     __moveRightAnimation: Animation
     __moveLeftAnimation: Animation
     __jumpAnimation: Animation
+    __afkImage: Image
+
+    __indexRight: int
+    __indexLeft: int
+    __indexJump: int
 
     def __init__(self):
         self.__moveRightAnimation = Animation()
         self.__moveLeftAnimation = Animation()
         self.__jumpAnimation = Animation()
 
+        self.__indexJump = 0
+        self.__indexLeft = 0
+        self.__indexRight = 0
+
+    def getmoveRightAnimation(self):
+        self.__indexJump = 0
+        self.__indexLeft = 0
+        self.__indexRight += 1
+        previousIndex = self.__indexRight - 1
+        return self.__moveRightAnimation.getFrame(previousIndex % self.__moveRightAnimation.getLenImage())
+
+    def getmoveLeftAnimation(self):
+        self.__indexJump = 0
+        self.__indexRight = 0
+        self.__indexLeft += 1
+        previousIndex = self.__indexLeft - 1
+        return self.__moveLeftAnimation.getFrame(previousIndex % self.__moveLeftAnimation.getLenImage())
+
+    def getJumpAnimation(self):
+        self.__indexRight = 0
+        self.__indexLeft = 0
+        self.__indexJump += 1
+        previousIndex = self.__indexJump - 1
+        return self.__jumpAnimation.getFrame(previousIndex % self.__jumpAnimation.getLenImage())
+
+    def addMoveRightAnimation(self, image: Image):
+        self.__moveRightAnimation.addFrame(image)
+
+    def addMoveLeftAnimation(self, image: Image):
+        self.__moveLeftAnimation.addFrame(image)
+
+    def addJumpAnimation(self, image: Image):
+        self.__jumpAnimation.addFrame(image)
+
+    # getter/setter afkImage
     @property
-    def MoveRightAnimation(self) -> Animation:
-        return self.__moveRightAnimation
+    def afkImage(self) -> Image:
+        return self.__afkImage
 
-    @MoveRightAnimation.setter
-    def MoveRightAnimation(self, moveRightAnimation: Animation) -> None:
-        self.__moveRightAnimation = moveRightAnimation
+    @afkImage.setter
+    def afkImage(self, afkImage: Image) -> None:
+        self.__afkImage = afkImage
 
-    @property
-    def MoveLeftAnimation(self) -> Animation:
-        return self.__moveLeftAnimation
+    def setImageFromDirectory(self, directory: str, nbImage: list = [1, 1, 1]):
+        """
+        Va chercher directement les images dans leurs dossiers associés
+        :param directory: le dossier du personnage
+        :param nbImage: liste contenant le nombre d'image pour chaque animation de la forme [nbImageRight, nbImageLeft, nbImageJump]
+        :return: None
+        """
+        for i in range(nbImage[0]):
+            self.addMoveRightAnimation(Image(directory + "/right/" + str(i + 1) + ".png"))
 
-    @MoveLeftAnimation.setter
-    def MoveLeftAnimation(self, moveLeftAnimation: Animation) -> None:
-        self.__moveLeftAnimation = moveLeftAnimation
+        for i in range(nbImage[1]):
+            self.addMoveLeftAnimation(Image(directory + "/left/" + str(i + 1) + ".png"))
 
-    @property
-    def JumpAnimation(self) -> Animation:
-        return self.__jumpAnimation
+        for i in range(nbImage[2]):
+            self.addJumpAnimation(Image(directory + "/jump/" + str(i + 1) + ".png"))
 
-    @JumpAnimation.setter
-    def JumpAnimation(self, jumpAnimation: Animation) -> None:
-        self.__jumpAnimation = jumpAnimation
+        self.afkImage = Image(directory + "/afk.png")
