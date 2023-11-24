@@ -26,7 +26,7 @@ game.Gravity = 10
 
 # images par secondes
 clock = pygame.time.Clock()
-game.FPS = 120
+game.FPS = 80
 
 while game.play() is None:  # on fait tourner le jeux
     clock.tick(game.FPS)
