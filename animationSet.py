@@ -71,9 +71,10 @@ class AnimationSet:
             self.addMoveRightAnimation(Image(directory + "/right/" + str(i + 1) + ".png"))
 
         for i in range(nbImage[1]):
-            self.addMoveLeftAnimation(Image(directory + "/left/" + str(i + 1) + ".png"))
+            self.addMoveLeftAnimation(Image(directory + "/right/" + str(i + 1) + ".png"))
 
         for i in range(nbImage[2]):
             self.addJumpAnimation(Image(directory + "/jump/" + str(i + 1) + ".png"))
 
         self.afkImage = Image(directory + "/afk.png")
+

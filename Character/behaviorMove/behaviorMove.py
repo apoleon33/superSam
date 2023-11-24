@@ -10,11 +10,11 @@ class BehaviorMove(ABC):
 
     @abstractmethod
     def move_right(self) -> None:
-        self.__character.coordinate.X += 5
+        pass
 
     @abstractmethod
     def move_left(self) -> None:
-        self.__character.coordinate.X -= 5
+        pass
 
     @abstractmethod
     def jump(self) -> None:

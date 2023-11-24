@@ -6,7 +6,7 @@ class BehaviorMoveKeyboard(BehaviorMove):
         self.Character.Coordinate.X += 5
 
     def move_left(self) -> None:
-        pass
+        self.Character.Coordinate.X -= 5
 
     def jump(self) -> None:
-        self.Character.Coordinate.Y -= 10
+        self.Character.Coordinate.Y -= self.Character.jumpCount

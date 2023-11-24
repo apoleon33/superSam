@@ -11,5 +11,5 @@ class MainCharacter(Character):
     def __init__(self, coordinate: Coordinate):
         moveAnimation = AnimationSet()
 
-        moveAnimation.setImageFromDirectory("assets/character/sam", [8, 0, 3])
+        moveAnimation.setImageFromDirectory("assets/character/sam", [8, 8, 7])
         super().__init__("Sam", moveAnimation)
