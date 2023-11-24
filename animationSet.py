@@ -13,6 +13,7 @@ class AnimationSet:
     __indexJump: int
 
     __frame: int
+    __jumpFrame: int
 
     def __init__(self):
         self.__moveRightAnimation = Animation()
@@ -24,6 +25,7 @@ class AnimationSet:
         self.__indexRight = 0
 
         self.__frame = 0
+        self.__jumpFrame = 0
 
     def getMoveRightAnimation(self):
         self.__indexJump = 0
@@ -58,13 +60,13 @@ class AnimationSet:
         self.__indexRight = 0
         self.__indexLeft = 0
 
-        if self.__frame ==0:
+        if self.__jumpFrame == 0:
             self.__indexJump += 1
 
         previousIndex = self.__indexJump - 1
 
-        self.__frame += 1
-        self.__frame %= 4
+        self.__jumpFrame += 1
+        self.__jumpFrame %= 4
         return self.__jumpAnimation.getFrame(previousIndex % self.__jumpAnimation.getLenImage())
 
     def addMoveRightAnimation(self, image: Image):
