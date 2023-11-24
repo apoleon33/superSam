@@ -22,8 +22,11 @@ campus.addLevel(0, 0, accueil)
 
 # création du jeux en lui même
 game = Game(campus, sammy, pygame)
-game.FPS = 120
 game.Gravity = 10
 
+# images par secondes
+clock = pygame.time.Clock()
+game.FPS = 120
+
 while game.play() is None:  # on fait tourner le jeux
-    time.sleep(1 / game.FPS)
+    clock.tick(game.FPS)
