@@ -47,9 +47,9 @@ class Game:
         movePlayed = self.handleControls()
         if movePlayed is False:  # si la personne veut quitter la partie
             return False
-
         # gravité
-        if self.__mainCharacter.Coordinate.Y < self.__map.Height - 200:
+        self.__mainCharacter.checkJump()
+        if self.__mainCharacter.Coordinate.Y < self.__map.Height - 100:
             self.__mainCharacter.Coordinate.Y += self.__gravity
 
         self.displayGame()
@@ -73,7 +73,9 @@ class Game:
 
         # affichage de Samy
         samySprite = self.__pygame.image.load(self.__mainCharacter.getCurrentAnimation().getPath()).convert_alpha()
-        samySprite = pygame.transform.scale(samySprite, (200, 200))
+        if self.__mainCharacter.leftStatus:
+            samySprite = pygame.transform.flip(samySprite, True, False)
+        samySprite = pygame.transform.scale(samySprite, (80, 100))
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
     def setStory(self, story: Story):
