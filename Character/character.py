@@ -21,7 +21,7 @@ class Character:
     def __init__(self, name: str, animationSet: AnimationSet) -> None:
         self.__name = name
         self.__animationSet = animationSet
-        self.__currentAnimation = self.__animationSet.getmoveRightAnimation()
+        self.__currentAnimation = self.__animationSet.getMoveRightAnimation()
         self.__coordinate = Coordinate(0, 0)
 
         self.__maxJumpHeight = 10
@@ -35,12 +35,12 @@ class Character:
 
     def move_right(self):
         self.__behaviorMove.move_right()
-        self.__currentAnimation = self.__animationSet.getmoveRightAnimation()
+        self.__currentAnimation = self.__animationSet.getMoveRightAnimation()
         self.__leftStatus = False
 
     def move_left(self):
         self.__behaviorMove.move_left()
-        self.__currentAnimation = self.__animationSet.getmoveLeftAnimation()
+        self.__currentAnimation = self.__animationSet.getMoveLeftAnimation()
         self.__leftStatus = True
 
     def jump(self):
@@ -49,6 +49,7 @@ class Character:
     def checkJump(self):
         if self.__jumpStatus:
             self.__behaviorMove.jump()
+            self.__currentAnimation = self.__animationSet.getJumpAnimation()
 
             if self.__jumpCount > - self.__maxJumpHeight:
                 self.__jumpCount -= 1

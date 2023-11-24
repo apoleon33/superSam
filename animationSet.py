@@ -12,6 +12,8 @@ class AnimationSet:
     __indexLeft: int
     __indexJump: int
 
+    __frame: int
+
     def __init__(self):
         self.__moveRightAnimation = Animation()
         self.__moveLeftAnimation = Animation()
@@ -21,25 +23,48 @@ class AnimationSet:
         self.__indexLeft = 0
         self.__indexRight = 0
 
-    def getmoveRightAnimation(self):
+        self.__frame = 0
+
+    def getMoveRightAnimation(self):
         self.__indexJump = 0
         self.__indexLeft = 0
-        self.__indexRight += 1
-        previousIndex = self.__indexRight - 1
+
+        if self.__frame == 0:
+            self.__indexRight += 1
+
+        previousIndex = self.__indexRight
+        previousIndex -= 1
+
+        self.__frame += 1
+        self.__frame %= 4
+
         return self.__moveRightAnimation.getFrame(previousIndex % self.__moveRightAnimation.getLenImage())
 
-    def getmoveLeftAnimation(self):
+    def getMoveLeftAnimation(self):
         self.__indexJump = 0
         self.__indexRight = 0
-        self.__indexLeft += 1
+
+        if self.__frame == 0:
+            self.__indexLeft += 1
+
         previousIndex = self.__indexLeft - 1
+
+        self.__frame += 1
+        self.__frame %= 4
+
         return self.__moveLeftAnimation.getFrame(previousIndex % self.__moveLeftAnimation.getLenImage())
 
     def getJumpAnimation(self):
         self.__indexRight = 0
         self.__indexLeft = 0
-        self.__indexJump += 1
+
+        if self.__frame ==0:
+            self.__indexJump += 1
+
         previousIndex = self.__indexJump - 1
+
+        self.__frame += 1
+        self.__frame %= 4
         return self.__jumpAnimation.getFrame(previousIndex % self.__jumpAnimation.getLenImage())
 
     def addMoveRightAnimation(self, image: Image):
@@ -70,11 +95,10 @@ class AnimationSet:
         for i in range(nbImage[0]):
             self.addMoveRightAnimation(Image(directory + "/right/" + str(i + 1) + ".png"))
 
-        for i in range(nbImage[1]):
+        for i in range(nbImage[1]):  # les images de gauche sont les mêmes que celles de droite, mais retournées
             self.addMoveLeftAnimation(Image(directory + "/right/" + str(i + 1) + ".png"))
 
         for i in range(nbImage[2]):
             self.addJumpAnimation(Image(directory + "/jump/" + str(i + 1) + ".png"))
 
         self.afkImage = Image(directory + "/afk.png")
-
