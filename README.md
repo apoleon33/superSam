@@ -1,4 +1,4 @@
 # superSam
 
-![Lines of code](https://img.shields.io/tokei/lines/github.com/apoleon33/superSam)
+![](https://tokei.rs/b1/github/apoleon33/superSam)
 
