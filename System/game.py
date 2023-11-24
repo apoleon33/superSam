@@ -19,6 +19,9 @@ class Game:
     __camera: Coordinate  # ou on est, dans quel niveau
     __fps: int
 
+    __alreadyLoadedImages: [Image]
+    __alreadyLoadedPygameImages: [pygame.surface.Surface]
+
     def __init__(self, carte: Map, mainCharacter: MainCharacter, motor: pygame):
         self.__map = carte
         self.__mainCharacter = mainCharacter
@@ -35,8 +38,10 @@ class Game:
         self.__pygame.display.set_caption("Super Sam")
         self.__pygame.key.set_repeat(1, 1)
 
-        # le fond d'écran actuel, pour ne l'actualiser que quand il faut
+        # optimisation
         self.actualBackground = None
+        self.__alreadyLoadedImages = []
+        self.__alreadyLoadedPygameImages = []
 
     def play(self) -> bool:
         """
@@ -60,9 +65,10 @@ class Game:
         Affichage du jeux, de ses mobs et de son fond
         :return: Rien
         """
+
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
-        self.actualBackground = self.__pygame.image.load(actualLevel.Background.getPath()).convert_alpha()
+        self.actualBackground = self.loadImage(actualLevel.Background)
 
         backgroundSize: tuple = (
             int(self.actualBackground.get_rect().width / 2), int(self.actualBackground.get_rect().height / 2))
@@ -72,7 +78,8 @@ class Game:
         self.__screen.blit(self.actualBackground, (0, 0))
 
         # affichage de Samy
-        samySprite = self.__pygame.image.load(self.__mainCharacter.getCurrentAnimation().getPath()).convert_alpha()
+        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation())
+
         if self.__mainCharacter.leftStatus:
             samySprite = pygame.transform.flip(samySprite, True, False)
         samySprite = pygame.transform.scale(samySprite, (80, 100))
@@ -115,3 +122,19 @@ class Game:
     @Gravity.setter
     def Gravity(self, gravity: int) -> None:
         self.__gravity = gravity
+
+    def loadImage(self, image: Image) -> pygame.surface.Surface:
+        """
+        Ne charge l'image que si cela n'a pas déjà été fait.
+        :param image: l'image à afficher
+        :return: l'image chargée
+        """
+
+        for i in range(len(self.__alreadyLoadedImages)):
+            if self.__alreadyLoadedImages[i].getPath() == image.getPath():  # si l'image est déjà chargé dans la liste
+                return self.__alreadyLoadedPygameImages[i]
+
+        self.__alreadyLoadedImages.append(image)
+        loadedImage = pygame.image.load(image.getPath()).convert_alpha()
+        self.__alreadyLoadedPygameImages.append(loadedImage)
+        return loadedImage
