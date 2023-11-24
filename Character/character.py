@@ -1,5 +1,4 @@
 from Character.behaviorMove.behaviorMove import BehaviorMove
-from animation import Animation
 from animationSet import AnimationSet
 from coordinate import Coordinate
 from image import Image
@@ -45,11 +44,11 @@ class Character:
 
     def jump(self):
         self.__jumpStatus = True
+        self.__currentAnimation = self.__animationSet.getJumpAnimation()
 
     def checkJump(self):
         if self.__jumpStatus:
             self.__behaviorMove.jump()
-            self.__currentAnimation = self.__animationSet.getJumpAnimation()
 
             if self.__jumpCount > - self.__maxJumpHeight:
                 self.__jumpCount -= 1
