@@ -7,26 +7,28 @@ from Character.mainCharacter import MainCharacter
 from Map.level import Level
 from Map.map import Map
 from System.game import Game
+from config import WIDTH, HEIGHT, FPS, GRAVITY, MAIN_CHARACTER_HEIGHT, MAIN_CHARACTER_WIDTH
 from coordinate import Coordinate
 from image import Image
 
-sammy = MainCharacter(Coordinate(0, 0))
-sammy.setBehaviorMove(BehaviorMoveKeyboard())
+sami = MainCharacter(Coordinate(0, 0))
+sami.setBehaviorMove(BehaviorMoveKeyboard())
+sami.Coordinate.Y, sami.Coordinate.X = HEIGHT - MAIN_CHARACTER_HEIGHT, 0
 
 # création de la map
-campus = Map(int(1920 / 2), int(1080 / 2))
+campus = Map(WIDTH, HEIGHT)
 
 accueil = Level("Accueil")
-accueil.Background = Image("assets/levels/forest.jpg")
+accueil.Background = Image("assets/levels/atrium.png")
 campus.addLevel(0, 0, accueil)
 
 # création du jeux en lui même
-game = Game(campus, sammy, pygame)
-game.Gravity = 10
+game = Game(campus, sami)
+game.Gravity = GRAVITY
 
 # images par secondes
 clock = pygame.time.Clock()
-game.FPS = 80
+game.FPS = FPS
 
 while game.play() is None:  # on fait tourner le jeux
     clock.tick(game.FPS)
