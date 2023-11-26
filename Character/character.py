@@ -8,9 +8,9 @@ class Character:
     __name: str
     __coordinate: Coordinate
     __behaviorMove: BehaviorMove
+
     __animationSet: AnimationSet
     __leftStatus: bool
-
     __jumpStatus: bool
     __maxJumpHeight: int
     __jumpCount: int
@@ -23,9 +23,9 @@ class Character:
         self.__currentAnimation = self.__animationSet.getMoveRightAnimation()
         self.__coordinate = Coordinate(0, 0)
 
-        self.__maxJumpHeight = 10
+        self.__maxJumpHeight = 25
         self.__jumpStatus = False
-        self.__jumpCount = 30
+        self.__jumpCount = 0
 
     def setBehaviorMove(self, behaviorMove: BehaviorMove) -> None:
         self.__behaviorMove = behaviorMove
@@ -43,7 +43,9 @@ class Character:
         self.__leftStatus = True
 
     def jump(self):
-        self.__jumpStatus = True
+        if not self.__jumpStatus:
+            self.__jumpStatus = True
+            self.__jumpCount = self.__maxJumpHeight
         self.__currentAnimation = self.__animationSet.getJumpAnimation()
 
     def checkJump(self):
@@ -54,7 +56,6 @@ class Character:
                 self.__jumpCount -= 1
             else:
                 self.__jumpStatus = False
-                self.__jumpCount = 30
 
     def doNothing(self):
         self.__currentAnimation = self.__animationSet.afkImage
@@ -82,3 +83,12 @@ class Character:
     @jumpCount.setter
     def jumpCount(self, jumpCount: int) -> None:
         self.__jumpCount = jumpCount
+
+    # property de __jumpStatus
+    @property
+    def JumpStatus(self) -> bool:
+        return self.__jumpStatus
+
+    @JumpStatus.setter
+    def JumpStatus(self, jumpStatus: bool) -> None:
+        self.__jumpStatus = jumpStatus

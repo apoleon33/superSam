@@ -4,6 +4,7 @@ from Character.mainCharacter import MainCharacter
 from Map.map import Map
 from System.control import Control
 from System.story import Story
+from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, WIDTH, MAIN_CHARACTER_SPEED
 from coordinate import Coordinate
 from image import Image
 
@@ -13,7 +14,6 @@ class Game:
     __gravity: int
     __map: Map
     __story: Story
-    __pygame: pygame
     __control: Control
 
     __camera: Coordinate  # ou on est, dans quel niveau
@@ -22,21 +22,20 @@ class Game:
     __alreadyLoadedImages: [Image]
     __alreadyLoadedPygameImages: [pygame.surface.Surface]
 
-    def __init__(self, carte: Map, mainCharacter: MainCharacter, motor: pygame):
+    def __init__(self, carte: Map, mainCharacter: MainCharacter):
         self.__map = carte
         self.__mainCharacter = mainCharacter
-        self.__gravity = 5  # à modifier
-        self.__fps = 120
+        self.__gravity = MAIN_CHARACTER_SPEED
+        self.__fps = FPS
         self.__story = Story()
         self.__control = Control()
         self.__camera = Coordinate(0, 0)
 
         # on initialise pygame
-        self.__pygame = motor
-        self.__pygame.init()
-        self.__screen = self.__pygame.display.set_mode((self.__map.Width, self.__map.Height))
-        self.__pygame.display.set_caption("Super Sam")
-        self.__pygame.key.set_repeat(1, 1)
+        pygame.init()
+        self.__screen = pygame.display.set_mode((self.__map.Width, self.__map.Height))
+        pygame.display.set_caption("Super Sam")
+        pygame.key.set_repeat(1, 1)
 
         # optimisation
         self.actualBackground = None
@@ -53,12 +52,15 @@ class Game:
         if movePlayed is False:  # si la personne veut quitter la partie
             return False
         # gravité
+
         self.__mainCharacter.checkJump()
-        if self.__mainCharacter.Coordinate.Y < self.__map.Height - 100:
-            self.__mainCharacter.Coordinate.Y += self.__gravity
+
+        if self.__mainCharacter.Coordinate.Y < self.__map.Height - MAIN_CHARACTER_HEIGHT :
+            if not self.__mainCharacter.JumpStatus: # si la personne saute la gravité pose problème
+                self.__mainCharacter.Coordinate.Y += self.__gravity
 
         self.displayGame()
-        self.__pygame.display.update()
+        pygame.display.update()
 
     def displayGame(self):
         """
@@ -68,12 +70,14 @@ class Game:
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
-        self.actualBackground = self.loadImage(actualLevel.Background)
+        self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
 
-        backgroundSize: tuple = (
-            int(self.actualBackground.get_rect().width / 2), int(self.actualBackground.get_rect().height / 2))
+        # fond de l'image
+        backgroundWidth = self.actualBackground.get_rect().width
+        backgroundHeight = self.actualBackground.get_rect().height
+
+        backgroundSize: tuple = (WIDTH, HEIGHT)
         self.actualBackground = pygame.transform.scale(self.actualBackground, backgroundSize)
-        # image = pygame.transform.scale(image, (width * 2, height * 2))
 
         self.__screen.blit(self.actualBackground, (0, 0))
 
@@ -82,7 +86,7 @@ class Game:
 
         if self.__mainCharacter.leftStatus:
             samySprite = pygame.transform.flip(samySprite, True, False)
-        samySprite = pygame.transform.scale(samySprite, (80, 100))
+        samySprite = pygame.transform.scale(samySprite, (80, MAIN_CHARACTER_HEIGHT))
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
     def setStory(self, story: Story):
@@ -123,10 +127,11 @@ class Game:
     def Gravity(self, gravity: int) -> None:
         self.__gravity = gravity
 
-    def loadImage(self, image: Image) -> pygame.surface.Surface:
+    def loadImage(self, image: Image, darken: bool = False) -> pygame.surface.Surface:
         """
         Ne charge l'image que si cela n'a pas déjà été fait.
         :param image: l'image à afficher
+        :param darken: Si l'on doit assombrir l'image avant de l'enregistrer
         :return: l'image chargée
         """
 
@@ -136,5 +141,10 @@ class Game:
 
         self.__alreadyLoadedImages.append(image)
         loadedImage = pygame.image.load(image.getPath()).convert_alpha()
+
+        if darken:
+            brighten = 125
+            loadedImage.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_SUB)
+
         self.__alreadyLoadedPygameImages.append(loadedImage)
         return loadedImage
