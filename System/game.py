@@ -94,7 +94,10 @@ class Game:
         pass
 
     def handleControls(self) -> bool | Image:
-
+        """
+        Fonction de prise en charge des contrôles du clavier
+        :return: L'image à afficher de Sami, False si la personne veut quitter le jeux.
+        """
         keys = pygame.key.get_pressed()
         # print the key pressed
         for event in pygame.event.get():
