@@ -65,7 +65,6 @@ class Character(ABC):
         Fonction appelée dès que le mob doit sauter.
         :return: Rien
         """
-
         if not self.__jumpStatus:
             self.__jumpStatus = True
             self.__jumpCount = self.__maxJumpHeight

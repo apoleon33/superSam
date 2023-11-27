@@ -51,10 +51,9 @@ class Game:
         movePlayed = self.handleControls()
         if movePlayed is False:  # si la personne veut quitter la partie
             return False
+
         # gravité
-
         self.__mainCharacter.checkJump()
-
         if self.__mainCharacter.Coordinate.Y < self.__map.Height - MAIN_CHARACTER_HEIGHT:
             if not self.__mainCharacter.JumpStatus:  # si la personne saute la gravité pose problème
                 self.__mainCharacter.Coordinate.Y += self.__gravity
