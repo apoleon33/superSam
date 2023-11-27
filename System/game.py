@@ -55,8 +55,8 @@ class Game:
 
         self.__mainCharacter.checkJump()
 
-        if self.__mainCharacter.Coordinate.Y < self.__map.Height - MAIN_CHARACTER_HEIGHT :
-            if not self.__mainCharacter.JumpStatus: # si la personne saute la gravité pose problème
+        if self.__mainCharacter.Coordinate.Y < self.__map.Height - MAIN_CHARACTER_HEIGHT:
+            if not self.__mainCharacter.JumpStatus:  # si la personne saute la gravité pose problème
                 self.__mainCharacter.Coordinate.Y += self.__gravity
 
         self.displayGame()
@@ -77,16 +77,16 @@ class Game:
         backgroundHeight = self.actualBackground.get_rect().height
 
         backgroundSize: tuple = (WIDTH, HEIGHT)
-        self.actualBackground = pygame.transform.scale(self.actualBackground, backgroundSize)
+        # self.actualBackground = pygame.transform.scale(self.actualBackground, backgroundSize)
 
         self.__screen.blit(self.actualBackground, (0, 0))
 
         # affichage de Samy
-        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation())
+        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(), rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
 
         if self.__mainCharacter.leftStatus:
             samySprite = pygame.transform.flip(samySprite, True, False)
-        samySprite = pygame.transform.scale(samySprite, (80, MAIN_CHARACTER_HEIGHT))
+        # samySprite = pygame.transform.scale(samySprite, (80, MAIN_CHARACTER_HEIGHT))
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
     def setStory(self, story: Story):
@@ -127,11 +127,13 @@ class Game:
     def Gravity(self, gravity: int) -> None:
         self.__gravity = gravity
 
-    def loadImage(self, image: Image, darken: bool = False) -> pygame.surface.Surface:
+    def loadImage(self, image: Image, darken: bool = False,
+                  rescale: list[bool, int, int] = [False, 0, 0]) -> pygame.surface.Surface:
         """
         Ne charge l'image que si cela n'a pas déjà été fait.
         :param image: l'image à afficher
         :param darken: Si l'on doit assombrir l'image avant de l'enregistrer
+        :param rescale: Une liste, avec en premier indice un booléen, suivi des deux dimensions
         :return: l'image chargée
         """
 
@@ -145,6 +147,9 @@ class Game:
         if darken:
             brighten = 125
             loadedImage.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_SUB)
+
+        if rescale[0]:
+            loadedImage = pygame.transform.scale(loadedImage, (rescale[1], rescale[2]))
 
         self.__alreadyLoadedPygameImages.append(loadedImage)
         return loadedImage
