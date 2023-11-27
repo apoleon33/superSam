@@ -1,5 +1,3 @@
-import time
-
 import pygame
 
 from Character.behaviorMove.behaviorMoveKeyboard import BehaviorMoveKeyboard
