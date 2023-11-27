@@ -82,7 +82,8 @@ class Game:
         self.__screen.blit(self.actualBackground, (0, 0))
 
         # affichage de Samy
-        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(), rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
+        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
+                                    rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
 
         if self.__mainCharacter.leftStatus:
             samySprite = pygame.transform.flip(samySprite, True, False)
@@ -128,7 +129,7 @@ class Game:
         self.__gravity = gravity
 
     def loadImage(self, image: Image, darken: bool = False,
-                  rescale: list[bool, int, int] = [False, 0, 0]) -> pygame.surface.Surface:
+                  rescale: list[bool, int, int] = (False, 0, 0)) -> pygame.surface.Surface:
         """
         Ne charge l'image que si cela n'a pas déjà été fait.
         :param image: l'image à afficher
@@ -145,7 +146,7 @@ class Game:
         loadedImage = pygame.image.load(image.getPath()).convert_alpha()
 
         if darken:
-            brighten = 125
+            brighten = 85
             loadedImage.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_SUB)
 
         if rescale[0]:
