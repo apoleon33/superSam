@@ -1,5 +1,6 @@
 from Character.character import Character
 from Items.item import Item
+from Map.block import Block
 from Map.tunnel import Tunnel
 from image import Image
 
@@ -10,7 +11,7 @@ class Level:
     __items: [Item]
     __characters: [Character]
     __tunnels: [Tunnel]
-    __organisation: [Organisation]
+    __organisation: []
     __blocks: [Block]
 
     def __init__(self, name: str):
