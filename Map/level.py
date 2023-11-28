@@ -10,6 +10,8 @@ class Level:
     __items: [Item]
     __characters: [Character]
     __tunnels: [Tunnel]
+    __organisation: [Organisation]
+    __blocks: [Block]
 
     def __init__(self, name: str):
         self.__name = name
@@ -17,6 +19,8 @@ class Level:
         self.__characters = []
         self.__tunnels = []
         self.background = Image("")  # à mettre: image de fond par défault
+        self.__organisation = []
+        self.__blocks = []
 
     @property
     def Background(self) -> Image:
@@ -28,3 +32,12 @@ class Level:
 
     def getName(self) -> str:
         return self.__name
+
+    def Level(self, name: str):
+        self.__name = name
+
+    def CreateLevel(self):
+        pass
+
+    def LoadFromImage(self, image: Image):
+        self.__image = image

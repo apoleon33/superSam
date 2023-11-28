@@ -17,3 +17,14 @@ class Tunnel:
         - les portes
         """
         self.__type = typ
+
+    @property
+    def Sprite(self) -> Image:
+        return self.__sprite
+
+    @Sprite.setter
+    def Sprite(self, sprite: Image) -> None:
+        self.__sprite = sprite
+
+    def Tunnel(self, type: str):
+        self.__type = type
