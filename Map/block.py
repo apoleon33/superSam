@@ -1,6 +1,5 @@
 from coordinate import Coordinate
 from image import Image
-from level import Level
 
 class Block:
     __texture: Image
