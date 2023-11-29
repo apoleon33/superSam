@@ -124,7 +124,7 @@ class Game:
                     return self.__mainCharacter.move_right()
                 elif event.key in self.__control.getLeftKeys():
                     return self.__mainCharacter.move_left()
-                elif event.key in self.__control.getJumpKeys():
+                elif event.key in self.__control.getJumpKeys() and self.isTouchingTheGround(self.__mainCharacter):
                     return self.__mainCharacter.jump()
 
             elif event.type == pygame.QUIT:
@@ -134,6 +134,14 @@ class Game:
 
     def isColliding(self, character: Character) -> bool:
         return pygame.Rect.colliderect(character.getHitbox(), self.testCollision)
+
+    def isTouchingTheGround(self, character: Character) -> bool:
+        """
+        Vérifie si le personnage est en train de toucher le sol
+        :param character: Le personnage à vérifier
+        :return: un booléen selon que le personnage touche le sol ou non
+        """
+        return character.getHitbox().bottom == self.testCollision.top or character.Coordinate.Y >= self.__map.Height - MAIN_CHARACTER_HEIGHT
 
     def handleCollision(self, character: Character):
 
