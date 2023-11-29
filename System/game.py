@@ -43,7 +43,7 @@ class Game:
         self.__alreadyLoadedImages = []
         self.__alreadyLoadedPygameImages = []
 
-        self.testCollision = pygame.Rect(500, HEIGHT - 100, 200, 100)
+        self.testCollision = pygame.Rect(500, HEIGHT - 100, 500, 100)
 
     def play(self) -> bool:
         """
