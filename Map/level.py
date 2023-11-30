@@ -37,33 +37,23 @@ class Level:
     def getName(self) -> str:
         return self.__name
 
-    def Level(self, name: str):
-        self.__name = name
-
     def CreateLevel(self):
         """
         On crée un niveau avec un nom, un fond, des items, des personnages, des tunnels, une organisation et des blocs
         :return:
         """
-        self.__level = Level("")
-        self.__level.Background = Image("")
-        self.__level.addBlock(Block(Image(""), 0, 0, Coordinate(0, 0)))
-        self.__level.addTunnel(Door(Image(""), 0, 0, Coordinate(0, 0)))
-        self.__level.addTunnel(Elevator(Image(""), 0, 0, Coordinate(0, 0)))
-        self.__level.addItem(Item(Image(""), 0, 0, Coordinate(0, 0)))
-        self.__level.addCharacter(Character(Coordinate(0, 0)))
 
-    def LoadFromImage(self, image: Image):
-        self.__image = image
+        for mob in self.__characters:
+            self.__organisation.append(mob)
+        for item in self.__items:
+            self.__organisation.append(item)
+        for tunnel in self.__tunnels:
+            self.__organisation.append(tunnel)
+        for block in self.__blocks:
+            self.__organisation.append(block)
 
-    def addBlock(self, param):
-        pass
 
-    def addTunnel(self, param):
-        pass
 
-    def addItem(self, param):
-        pass
 
-    def addCharacter(self, param):
-        pass
+
+
