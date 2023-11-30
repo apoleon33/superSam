@@ -7,7 +7,7 @@ class Tunnel:
     __sprite: Image
     __coordinate: Coordinate
 
-    def __init__(self, typ: str):
+    def __init__(self, type: str):
         """
         Les tunnels sont les moyens de passer d'un niveau à l'autre
 
@@ -16,7 +16,12 @@ class Tunnel:
         - les ascenseurs (monter ou descendre)
         - les portes
         """
-        self.__type = typ
+        self.__type = type
+
+        if self.__type == "elevator":
+            self.__sprite = Image("assets/tunnel/elevator/elevator1.png")
+        else :
+            self.__sprite = Image("assets/blocks/tunnel/porte/porte.png")
 
     @property
     def Sprite(self) -> Image:
