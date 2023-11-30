@@ -144,7 +144,11 @@ class Game:
         return character.getHitbox().bottom == self.testCollision.top or character.Coordinate.Y >= self.__map.Height - MAIN_CHARACTER_HEIGHT
 
     def handleCollision(self, character: Character):
-
+        """
+        Gère les collisions entre les personnages et les différents éléments du niveau.
+        :param character: le personnage dont il faut tester les collisions.
+        :return: Rien
+        """
         def handleXCollision():
             match character.Direction:
                 case "droite":
