@@ -97,6 +97,7 @@ class Game:
         samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
                                     rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
 
+        # TODO: trouver un meilleur moyen de le faire car la ça marche pas en l'air
         if self.__mainCharacter.Direction == "gauche":
             samySprite = pygame.transform.flip(samySprite, True, False)
 
