@@ -8,9 +8,9 @@ class Block:
     __coordinate: Coordinate
 
     def __init__(self, texture: Image, width: int, height: int, coordinate: Coordinate):
-        self.__texture = texture
-        self.__width = width
-        self.__height = height
+        self.__texture = Image("assets/blocks/beton/Beton.tiff")
+        self.__width = 0
+        self.__height = 0
         self.__coordinate = coordinate
 
     @property
@@ -37,8 +37,4 @@ class Block:
     def Coordinate(self, coordinate: Coordinate) -> None:
         self.__coordinate = coordinate
 
-    def Block(self):
-        self.__texture = Image("")
-        self.__width = 0
-        self.__height = 0
-        self.__coordinate = Coordinate(0, 0)
+
