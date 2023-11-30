@@ -1,4 +1,7 @@
+import pygame
+
 from coordinate import Coordinate
+from hitbox import Hitbox
 from image import Image
 
 
@@ -7,6 +10,9 @@ class Block:
     __width: int
     __height: int
     __coordinate: Coordinate
+
+    # hitbox
+    __rect: Hitbox
 
     def __init__(self, texture: Image, width: int, height: int, coordinate: Coordinate):
         self.__texture = texture
