@@ -5,7 +5,8 @@ from Character.mainCharacter import MainCharacter
 from Map.map import Map
 from System.control import Control
 from System.story import Story
-from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, WIDTH, MAIN_CHARACTER_SPEED, MAIN_CHARACTER_WIDTH, GRAVITY
+from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, WIDTH, MAIN_CHARACTER_SPEED, MAIN_CHARACTER_WIDTH, GRAVITY, \
+    HITBOX
 from coordinate import Coordinate
 from image import Image
 
@@ -68,11 +69,11 @@ class Game:
                     self.__mainCharacter.Coordinate.Y -= self.__gravity
                     self.__mainCharacter.getHitbox().bottom -= self.__gravity
 
-        self.displayGame(hitbox=True)
+        self.displayGame(hitbox=HITBOX)
         pygame.display.update()
         return True
 
-    def displayGame(self, hitbox=False):
+    def displayGame(self, hitbox=HITBOX):
         """
         Affichage du jeux, de ses mobs et de son fond
         :return: Rien
@@ -149,6 +150,7 @@ class Game:
         :param character: le personnage dont il faut tester les collisions.
         :return: Rien
         """
+
         def handleXCollision():
             match character.Direction:
                 case "droite":
