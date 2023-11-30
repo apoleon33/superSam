@@ -39,3 +39,8 @@ class Map:
 
     def getLevel(self, x: int, y: int) -> Level:
         return self.__levels[y][x]
+
+    def Map(self, width: int, height: int):
+        self.__width = width
+        self.__height = height
+        self.__levels = [[EmptyLevel()]]

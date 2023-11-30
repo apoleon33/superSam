@@ -37,4 +37,8 @@ class Block:
     def Coordinate(self, coordinate: Coordinate) -> None:
         self.__coordinate = coordinate
 
-
+    def Block(self):
+        self.__texture = Image("")
+        self.__width = 0
+        self.__height = 0
+        self.__coordinate = Coordinate(0, 0)

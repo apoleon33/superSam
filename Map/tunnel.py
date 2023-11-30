@@ -26,5 +26,15 @@ class Tunnel:
     def Sprite(self, sprite: Image) -> None:
         self.__sprite = sprite
 
-    def Tunnel(self, type: str):
-        self.__type = type
+    def Tunnel(self, type: str): #On un type, une image et une position à l'attribut Tunnel
+       self.__type = type
+       self.__sprite = Image("")
+       self.__coordinate = Coordinate(0, 0)
+
+
+
+
+
+
+
+
