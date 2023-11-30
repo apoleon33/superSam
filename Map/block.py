@@ -1,6 +1,7 @@
 from coordinate import Coordinate
 from image import Image
 
+
 class Block:
     __texture: Image
     __width: int
@@ -8,9 +9,9 @@ class Block:
     __coordinate: Coordinate
 
     def __init__(self, texture: Image, width: int, height: int, coordinate: Coordinate):
-        self.__texture = Image("assets/blocks/beton/Beton.tiff")
-        self.__width = 0
-        self.__height = 0
+        self.__texture = texture
+        self.__width = width
+        self.__height = width
         self.__coordinate = coordinate
 
     @property
@@ -36,5 +37,3 @@ class Block:
     @Coordinate.setter
     def Coordinate(self, coordinate: Coordinate) -> None:
         self.__coordinate = coordinate
-
-
