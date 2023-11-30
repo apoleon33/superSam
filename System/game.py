@@ -5,8 +5,7 @@ from Character.mainCharacter import MainCharacter
 from Map.map import Map
 from System.control import Control
 from System.story import Story
-from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, WIDTH, MAIN_CHARACTER_SPEED, MAIN_CHARACTER_WIDTH, GRAVITY, \
-    HITBOX
+from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX
 from coordinate import Coordinate
 from image import Image
 
@@ -92,8 +91,6 @@ class Game:
         self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
 
         # fond de l'image
-        backgroundSize: tuple = (WIDTH, HEIGHT)
-
         self.__screen.blit(self.actualBackground, (0, 0))
 
         # affichage de Samy
