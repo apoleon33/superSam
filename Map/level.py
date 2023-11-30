@@ -7,6 +7,7 @@ from Map.tunnel import Tunnel
 from image import Image
 from coordinate import Coordinate
 
+
 class Level:
     __name: str
     __background: Image
@@ -39,9 +40,11 @@ class Level:
     def Level(self, name: str):
         self.__name = name
 
-
-
-    def CreateLevel(self): # On crée un niveau avec un nom, un fond, des items, des personnages, des tunnels, une organisation et des blocs
+    def CreateLevel(self):
+        """
+        On crée un niveau avec un nom, un fond, des items, des personnages, des tunnels, une organisation et des blocs
+        :return:
+        """
         self.__level = Level("")
         self.__level.Background = Image("")
         self.__level.addBlock(Block(Image(""), 0, 0, Coordinate(0, 0)))
