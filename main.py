@@ -28,5 +28,5 @@ game.Gravity = GRAVITY
 clock = pygame.time.Clock()
 game.FPS = FPS
 
-while game.play() is None:  # on fait tourner le jeux
+while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)

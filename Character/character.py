@@ -5,19 +5,23 @@ from animationSet import AnimationSet
 from coordinate import Coordinate
 from image import Image
 
+import pygame
+
 
 class Character(ABC):
     __name: str
     __coordinate: Coordinate
     __behaviorMove: BehaviorMove
 
-    __animationSet: AnimationSet
-    __leftStatus: bool
     __jumpStatus: bool
     __maxJumpHeight: int
     __jumpCount: int
 
+    __animationSet: AnimationSet
     __currentAnimation: Image
+
+    __rect: pygame.Rect
+    __direction: str
 
     def __init__(self, name: str, animationSet: AnimationSet) -> None:
         """
@@ -31,6 +35,9 @@ class Character(ABC):
         self.__maxJumpHeight = 25
         self.__jumpStatus = False
         self.__jumpCount = 0
+
+        self.setHitbox(0, 0)
+        self.__direction = "afk"  # autres versions possible: "droite", "gauche", "haut", "bas"
 
     def setBehaviorMove(self, behaviorMove: BehaviorMove) -> None:
         """
@@ -49,7 +56,7 @@ class Character(ABC):
         """
         self.__behaviorMove.move_right()
         self.__currentAnimation = self.__animationSet.getMoveRightAnimation()
-        self.__leftStatus = False
+        self.__direction = "droite"
 
     def move_left(self):
         """
@@ -58,7 +65,7 @@ class Character(ABC):
         """
         self.__behaviorMove.move_left()
         self.__currentAnimation = self.__animationSet.getMoveLeftAnimation()
-        self.__leftStatus = True
+        self.__direction = "gauche"
 
     def jump(self):
         """
@@ -84,6 +91,11 @@ class Character(ABC):
             else:
                 self.__jumpStatus = False
 
+            if self.__jumpCount > 0:
+                self.__direction = "haut"
+            else:
+                self.__direction = "bas"
+
     def doNothing(self):
         """
         Assigne l'image actuelle comme l'image afk
@@ -104,14 +116,6 @@ class Character(ABC):
         return self.__coordinate
 
     @property
-    def leftStatus(self) -> bool:
-        return self.__leftStatus
-
-    @leftStatus.setter
-    def leftStatus(self, leftStatus: bool) -> None:
-        self.__leftStatus = leftStatus
-
-    @property
     def jumpCount(self) -> int:
         return self.__jumpCount
 
@@ -119,7 +123,6 @@ class Character(ABC):
     def jumpCount(self, jumpCount: int) -> None:
         self.__jumpCount = jumpCount
 
-    # property de __jumpStatus
     @property
     def JumpStatus(self) -> bool:
         return self.__jumpStatus
@@ -127,3 +130,23 @@ class Character(ABC):
     @JumpStatus.setter
     def JumpStatus(self, jumpStatus: bool) -> None:
         self.__jumpStatus = jumpStatus
+
+    @property
+    def Direction(self) -> str:
+        return self.__direction
+
+    @Direction.setter
+    def Direction(self, direction: str) -> None:
+        self.__direction = direction
+
+    def setHitbox(self, width: int, height: int):
+        """
+        Définit la taille de la hitbox du personnage
+        :param width: Sa largeur
+        :param height: Sa hauteur
+        :return: Rien
+        """
+        self.__rect = pygame.Rect(self.__coordinate.X, self.__coordinate.Y, width, height)
+
+    def getHitbox(self) -> pygame.Rect:
+        return self.__rect
