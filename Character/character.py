@@ -3,6 +3,7 @@ from abc import ABC
 from Character.behaviorMove.behaviorMove import BehaviorMove
 from animationSet import AnimationSet
 from coordinate import Coordinate
+from hitbox import Hitbox
 from image import Image
 
 import pygame
@@ -22,6 +23,7 @@ class Character(ABC):
 
     __rect: pygame.Rect
     __direction: str
+    __hitbox: Hitbox
 
     def __init__(self, name: str, animationSet: AnimationSet) -> None:
         """
@@ -146,7 +148,8 @@ class Character(ABC):
         :param height: Sa hauteur
         :return: Rien
         """
-        self.__rect = pygame.Rect(self.__coordinate.X, self.__coordinate.Y, width, height)
+        # self.__rect = pygame.Rect(self.__coordinate.X, self.__coordinate.Y, width, height)
+        self.__hitbox = Hitbox(width, height, self.__coordinate)
 
     def getHitbox(self) -> pygame.Rect:
-        return self.__rect
+        return self.__hitbox.Rect
