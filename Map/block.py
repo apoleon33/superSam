@@ -43,3 +43,17 @@ class Block:
     @Coordinate.setter
     def Coordinate(self, coordinate: Coordinate) -> None:
         self.__coordinate = coordinate
+
+    @property
+    def Texture(self) -> Image:
+        return self.__texture
+
+    @Texture.setter
+    def Texture(self, texture: Image) -> None:
+        self.__texture = texture
+
+    def setHitbox(self, rect: Hitbox):
+        self.__rect = rect
+
+    def getHitbox(self) -> Hitbox:
+        return self.__rect

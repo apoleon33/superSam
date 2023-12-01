@@ -2,11 +2,13 @@ import pygame
 
 from Character.character import Character
 from Character.mainCharacter import MainCharacter
+from Map.block import Block
 from Map.map import Map
 from System.control import Control
 from System.story import Story
 from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX
 from coordinate import Coordinate
+from hitbox import Hitbox
 from image import Image
 
 
@@ -43,7 +45,7 @@ class Game:
         self.__alreadyLoadedImages = []
         self.__alreadyLoadedPygameImages = []
 
-        self.testCollision = pygame.Rect(500, HEIGHT - 100, 500, 100)
+        # self.testCollision = pygame.Rect(500, HEIGHT - 100, 500, 100)
 
     def play(self) -> bool:
         """
@@ -52,7 +54,7 @@ class Game:
         """
 
         # collision
-        self.handleCollision(self.__mainCharacter)
+        self.handleCollisions(self.__mainCharacter)
 
         movePlayed = self.handleControls()
         if movePlayed is False:  # si la personne veut quitter la partie
@@ -64,7 +66,8 @@ class Game:
             if not self.__mainCharacter.JumpStatus:  # si la personne saute la gravité pose problème
                 self.__mainCharacter.Coordinate.Y += self.__gravity
                 self.__mainCharacter.getHitbox().bottom += self.__gravity
-                if self.isColliding(self.__mainCharacter):
+
+                if self.isColliding(self.__mainCharacter)["status"]:
                     self.__mainCharacter.Coordinate.Y -= self.__gravity
                     self.__mainCharacter.getHitbox().bottom -= self.__gravity
 
@@ -84,28 +87,32 @@ class Game:
             :return: Rien
             """
             pygame.draw.rect(self.__screen, (0, 255, 0), self.__mainCharacter.getHitbox())
-            pygame.draw.rect(self.__screen, (255, 0, 0), self.testCollision)
+            # 6pygame.draw.rect(self.__screen, (255, 0, 0), self.testCollision)
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
-        self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
-
         # fond de l'image
+        self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
         self.__screen.blit(self.actualBackground, (0, 0))
+
+        if hitbox:
+            displayHitBox()
 
         # affichage de Samy
         samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
                                     rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
-
         # TODO: trouver un meilleur moyen de le faire car la ça marche pas en l'air
         if self.__mainCharacter.Direction == "gauche":
-            samySprite = pygame.transform.flip(samySprite, True, False)
-
+            samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
+                                        rescale=[True, 80, MAIN_CHARACTER_HEIGHT], inverse=True)
         self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
-
-        if hitbox:
-            displayHitBox()
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
+
+        # affichage des blocks
+        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
+            newBlock = self.loadImage(block.Texture, rescale=[True, block.Width, block.Height])
+            block.setHitbox(Hitbox(newBlock.get_width(), newBlock.get_height(), block.Coordinate))
+            self.__screen.blit(newBlock, (block.Coordinate.X, block.Coordinate.Y))
 
     def setStory(self, story: Story):
         pass
@@ -131,8 +138,19 @@ class Game:
 
         return self.__mainCharacter.doNothing()
 
-    def isColliding(self, character: Character) -> bool:
-        return pygame.Rect.colliderect(character.getHitbox(), self.testCollision)
+    def isColliding(self, character: Character) -> dict:
+        returnMessage = {
+            "status": False,
+            "element": None
+        }
+
+        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
+            if pygame.Rect.colliderect(character.getHitbox(), block.getHitbox().Rect):
+                returnMessage["status"] = True
+                returnMessage["element"] = block
+
+        return returnMessage
+        # return pygame.Rect.colliderect(character.getHitbox(), element.getHitbox().Rect)
 
     def isTouchingTheGround(self, character: Character) -> bool:
         """
@@ -140,38 +158,41 @@ class Game:
         :param character: Le personnage à vérifier
         :return: un booléen selon que le personnage touche le sol ou non
         """
-        return character.getHitbox().bottom == self.testCollision.top or character.Coordinate.Y >= self.__map.Height - MAIN_CHARACTER_HEIGHT
 
-    def handleCollision(self, character: Character):
+        # il existe probablement un code plus clean pour faire ça
+        if self.isColliding(character)["status"] and character.getHitbox().bottom == self.isColliding(character)["element"].top:
+            return True
+        elif character.getHitbox().bottom >= self.__map.Height - MAIN_CHARACTER_HEIGHT:
+            return True
+        return False
+
+    def handleCollisions(self, character: Character):
         """
         Gère les collisions entre les personnages et les différents éléments du niveau.
         :param character: le personnage dont il faut tester les collisions.
         :return: Rien
         """
 
-        def handleXCollision():
-            match character.Direction:
-                case "droite":
-                    character.getHitbox().right = self.testCollision.left - 10
-                    character.Coordinate.X = self.testCollision.left - 80 - 10
-                    character.onTopOf = False
-
-                case "gauche":
-                    character.getHitbox().left = self.testCollision.right + 10
-                    character.Coordinate.X = self.testCollision.right + 10
-                    character.onTopOf = False
-
-        def handleYCollision():
+        collisionTest = self.isColliding(character)
+        if collisionTest["status"]:
+            collision: pygame.Rect = collisionTest["element"].getHitbox().Rect
             match character.Direction:
                 case "bas":
-                    character.getHitbox().bottom = self.testCollision.top
-                    character.Coordinate.Y = self.testCollision.top - MAIN_CHARACTER_HEIGHT
+                    character.getHitbox().bottom = collision.top
+                    character.Coordinate.Y = collision.top - MAIN_CHARACTER_HEIGHT
                     character.onTopOf = True
                     return None
 
-        if self.isColliding(character):
-            handleYCollision()
-            handleXCollision()
+            match character.Direction:
+                case "droite":
+                    character.getHitbox().right = collision.left - 10
+                    character.Coordinate.X = collision.left - 80 - 10
+                    character.onTopOf = False
+
+                case "gauche":
+                    character.getHitbox().left = collision.right + 10
+                    character.Coordinate.X = collision.right + 10
+                    character.onTopOf = False
 
     @property
     def FPS(self) -> int:
@@ -190,17 +211,19 @@ class Game:
         self.__gravity = gravity
 
     def loadImage(self, image: Image, darken: bool = False,
-                  rescale: list[bool, int, int] = (False, 0, 0)) -> pygame.surface.Surface:
+                  rescale: list[bool, int, int] = (False, 0, 0), inverse: bool = False) -> pygame.surface.Surface:
         """
         Ne charge l'image que si cela n'a pas déjà été fait.
         :param image: l'image à afficher
         :param darken: Si l'on doit assombrir l'image avant de l'enregistrer
         :param rescale: Une liste, avec en premier indice un booléen, suivi des deux dimensions
+        :param inverse: Doit-on inverser l'image ou non
         :return: l'image chargée
         """
 
         for i in range(len(self.__alreadyLoadedImages)):
-            if self.__alreadyLoadedImages[i].getPath() == image.getPath():  # si l'image est déjà chargé dans la liste
+            if self.__alreadyLoadedImages[i].getPath() == image.getPath() and not inverse:
+                # si l'image est déjà chargé dans la liste
                 return self.__alreadyLoadedPygameImages[i]
 
         self.__alreadyLoadedImages.append(image)
@@ -212,6 +235,9 @@ class Game:
 
         if rescale[0]:
             loadedImage = pygame.transform.scale(loadedImage, (rescale[1], rescale[2]))
+
+        if inverse:
+            loadedImage = pygame.transform.flip(loadedImage, True, False)
 
         self.__alreadyLoadedPygameImages.append(loadedImage)
         return loadedImage
