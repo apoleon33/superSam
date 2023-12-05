@@ -93,7 +93,6 @@ class Game:
             pygame.draw.rect(self.__screen, (0, 255, 0), self.__mainCharacter.getHitbox())
             for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
                 pygame.draw.rect(self.__screen, (255, 0, 0), block.getHitbox().Rect)
-            # 6pygame.draw.rect(self.__screen, (255, 0, 0), self.testCollision)
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
