@@ -25,7 +25,10 @@ accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 3, HEIGHT - 246)))
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 3, HEIGHT - (246 + 123 + 123))))
 accueil.addBlock(Concrete(Coordinate(0, HEIGHT - 123)))
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 4, HEIGHT - (246 + (2 * 123)))))
+
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - (246 + (1 * 123)))))
+accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 246)))
+accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 123)))
 
 campus = Map(WIDTH, HEIGHT)
 campus.addLevel(0, 0, accueil)
