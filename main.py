@@ -6,6 +6,7 @@ from Map.concrete import Concrete
 from Map.level import Level
 from Map.map import Map
 from System.game import Game
+from System.musicPlayer import MusicPlayer
 from config import WIDTH, HEIGHT, FPS, GRAVITY, MAIN_CHARACTER_HEIGHT
 from coordinate import Coordinate
 from image import Image
@@ -40,6 +41,11 @@ game.Gravity = GRAVITY
 # images par secondes
 clock = pygame.time.Clock()
 game.FPS = FPS
+
+# musique
+travis = Image("assets/sounds/90210.mp3")
+music = MusicPlayer(travis)
+music.play()
 
 while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)
