@@ -1,4 +1,6 @@
 import pygame
+import pytmx
+import pyscroll
 
 from Character.character import Character
 from Character.mainCharacter import MainCharacter
@@ -40,6 +42,13 @@ class Game:
         self.__screen = pygame.display.set_mode((self.__map.Width, self.__map.Height))
         pygame.display.set_caption("Super Sam")
         pygame.key.set_repeat(1, 1)
+
+        # essai chargement carte
+        tmx_data = pytmx.util_pygame.load_pygame("map2.tmx")
+        map_data = pyscroll.data.TiledMapData(tmx_data)
+        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__screen.get_size())
+
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer)
 
         # optimisation
         self.actualBackground = None
@@ -100,6 +109,8 @@ class Game:
         # fond de l'image
         self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
         self.__screen.blit(self.actualBackground, (0, 0))
+
+        self.group.draw(self.__screen)
 
         if hitbox:
             displayHitBox()
