@@ -3,6 +3,8 @@ import pygame
 from Character.behaviorMove.behaviorMoveKeyboard import BehaviorMoveKeyboard
 from Character.mainCharacter import MainCharacter
 from Map.concrete import Concrete
+from Map.door import Door
+from Map.elevator import Elevator
 from Map.level import Level
 from Map.map import Map
 from System.game import Game
@@ -30,6 +32,14 @@ accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 4, HEIGHT - (246 + (2 
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - (246 + (1 * 123)))))
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 246)))
 accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 123)))
+accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 8, HEIGHT - 123)))
+accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 9, HEIGHT - 123)))
+accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 10, HEIGHT - 123)))
+
+sortie = Door()
+sortie.Coordinate.X = 250 + int(256 / 2) * 9
+sortie.Coordinate.Y = HEIGHT - 123 - 538
+accueil.addTunnel(sortie)
 
 campus = Map(WIDTH, HEIGHT)
 campus.addLevel(0, 0, accueil)

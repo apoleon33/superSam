@@ -17,10 +17,11 @@ class Tunnel:
         - les portes
         """
         self.__type = type
+        self.__coordinate = Coordinate(0, 0)
 
         if self.__type == "elevator":
             self.__sprite = Image("assets/tunnel/elevator/elevator1.png")
-        else :
+        else:
             self.__sprite = Image("assets/blocks/tunnel/porte/porte.png")
 
     @property
@@ -31,15 +32,6 @@ class Tunnel:
     def Sprite(self, sprite: Image) -> None:
         self.__sprite = sprite
 
-    def Tunnel(self, type: str): #On un type, une image et une position à l'attribut Tunnel
-       self.__type = type
-       self.__sprite = Image("")
-       self.__coordinate = Coordinate(0, 0)
-
-
-
-
-
-
-
-
+    @property
+    def Coordinate(self) -> Coordinate:
+        return self.__coordinate

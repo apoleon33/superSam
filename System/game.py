@@ -4,6 +4,7 @@ from Character.character import Character
 from Character.mainCharacter import MainCharacter
 from Map.block import Block
 from Map.map import Map
+from Map.tunnel import Tunnel
 from System.control import Control
 from System.story import Story
 from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX
@@ -118,6 +119,12 @@ class Game:
             newBlock = self.loadImage(block.Texture, rescale=[True, block.Width, block.Height])
             block.setHitbox(Hitbox(newBlock.get_width(), newBlock.get_height(), block.Coordinate))
             self.__screen.blit(newBlock, (block.Coordinate.X, block.Coordinate.Y))
+
+        # affichage des tunnels
+        for tunnel in self.__map.getLevel(self.__camera.X, self.__camera.Y).getTunnels():
+            tun: Tunnel = tunnel
+            newTunnel = self.loadImage(tun.Sprite)
+            self.__screen.blit(newTunnel, (tun.Coordinate.X, tun.Coordinate.Y))
 
     def setStory(self, story: Story):
         pass
