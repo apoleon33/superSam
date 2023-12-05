@@ -9,15 +9,15 @@ class BehaviorMove(ABC):
         self.__character = None
 
     @abstractmethod
-    def move_right(self) -> None:
+    def move_right(self) -> int:
         pass
 
     @abstractmethod
-    def move_left(self) -> None:
+    def move_left(self) -> int:
         pass
 
     @abstractmethod
-    def jump(self) -> None:
+    def jump(self) -> int:
         pass
 
     @property

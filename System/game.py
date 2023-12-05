@@ -54,22 +54,26 @@ class Game:
         """
 
         # collision
-        self.handleCollisions(self.__mainCharacter)
+        # self.handleCollisions(self.__mainCharacter)
 
+        sammiBeforeControlsX, sammiBeforeControlsY = self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y
         movePlayed = self.handleControls()
         if movePlayed is False:  # si la personne veut quitter la partie
             return False
 
         # gravité
-        self.__mainCharacter.checkJump()
-        if self.__mainCharacter.Coordinate.Y < self.__map.Height - MAIN_CHARACTER_HEIGHT:
-            if not self.__mainCharacter.JumpStatus:  # si la personne saute la gravité pose problème
-                self.__mainCharacter.Coordinate.Y += self.__gravity
-                self.__mainCharacter.getHitbox().bottom += self.__gravity
+        self.__mainCharacter.VelY += 1
+        if self.__mainCharacter.VelY > 10:
+            self.__mainCharacter.VelY = 10
 
-                if self.isColliding(self.__mainCharacter)["status"]:
-                    self.__mainCharacter.Coordinate.Y -= self.__gravity
-                    self.__mainCharacter.getHitbox().bottom -= self.__gravity
+        self.__mainCharacter.changePrevisionnalX(movePlayed)
+        self.__mainCharacter.changePrevisionnalY(
+            self.__mainCharacter.getPrevisionnalCoordinate()[1] + self.__mainCharacter.VelY
+        )
+
+        self.handleCollisions(self.__mainCharacter)
+
+        self.__mainCharacter.updateCoordinate()
 
         self.displayGame(hitbox=HITBOX)
         pygame.display.update()
@@ -117,7 +121,7 @@ class Game:
     def setStory(self, story: Story):
         pass
 
-    def handleControls(self) -> bool | Image:
+    def handleControls(self) -> bool | int:
         """
         Fonction de prise en charge des contrôles du clavier
         :return: L'image à afficher de Sami, False si la personne veut quitter le jeux.
@@ -125,46 +129,25 @@ class Game:
         # print the key pressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                # print("Keydown")
+                if event.key in self.__control.getJumpKeys() and not self.__mainCharacter.JumpStatus and not self.__mainCharacter.IsInAir:
+                    # and self.isTouchingTheGround(self.__mainCharacter)
+                    return self.__mainCharacter.jump()
+
+                if event.key not in self.__control.getJumpKeys():
+                    self.__mainCharacter.JumpStatus = False
+
                 if event.key in self.__control.getRightKeys():
                     return self.__mainCharacter.move_right()
-                elif event.key in self.__control.getLeftKeys():
+                if event.key in self.__control.getLeftKeys():
                     return self.__mainCharacter.move_left()
-                elif event.key in self.__control.getJumpKeys() and self.isTouchingTheGround(self.__mainCharacter):
-                    return self.__mainCharacter.jump()
 
             elif event.type == pygame.QUIT:
                 return False
 
-        return self.__mainCharacter.doNothing()
+            else:
+                self.__mainCharacter.JumpStatus = False
 
-    def isColliding(self, character: Character) -> dict:
-        returnMessage = {
-            "status": False,
-            "element": None
-        }
-
-        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
-            if pygame.Rect.colliderect(character.getHitbox(), block.getHitbox().Rect):
-                returnMessage["status"] = True
-                returnMessage["element"] = block
-
-        return returnMessage
-        # return pygame.Rect.colliderect(character.getHitbox(), element.getHitbox().Rect)
-
-    def isTouchingTheGround(self, character: Character) -> bool:
-        """
-        Vérifie si le personnage est en train de toucher le sol
-        :param character: Le personnage à vérifier
-        :return: un booléen selon que le personnage touche le sol ou non
-        """
-
-        # il existe probablement un code plus clean pour faire ça
-        if self.isColliding(character)["status"] and character.getHitbox().bottom == self.isColliding(character)["element"].top:
-            return True
-        elif character.getHitbox().bottom >= self.__map.Height - MAIN_CHARACTER_HEIGHT:
-            return True
-        return False
+        return 0
 
     def handleCollisions(self, character: Character):
         """
@@ -173,26 +156,40 @@ class Game:
         :return: Rien
         """
 
-        collisionTest = self.isColliding(character)
-        if collisionTest["status"]:
-            collision: pygame.Rect = collisionTest["element"].getHitbox().Rect
-            match character.Direction:
-                case "bas":
-                    character.getHitbox().bottom = collision.top
-                    character.Coordinate.Y = collision.top - MAIN_CHARACTER_HEIGHT
-                    character.onTopOf = True
-                    return None
+        self.__mainCharacter.IsInAir = True
+        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
+            blok: Block = block  # histoire d'avoir l'autocomplétion
 
-            match character.Direction:
-                case "droite":
-                    character.getHitbox().right = collision.left - 10
-                    character.Coordinate.X = collision.left - 80 - 10
-                    character.onTopOf = False
+            prev = self.__mainCharacter.getPrevisionnalCoordinate()
+            dx: int = prev[0]
+            dy: int = prev[1]
 
-                case "gauche":
-                    character.getHitbox().left = collision.right + 10
-                    character.Coordinate.X = collision.right + 10
-                    character.onTopOf = False
+            # on check les collisions théoriques en x
+            if blok.getHitbox().Rect.colliderect(
+                    self.__mainCharacter.Coordinate.X + dx,
+                    self.__mainCharacter.Coordinate.Y,
+                    self.__mainCharacter.getHitbox().width,
+                    self.__mainCharacter.getHitbox().height):
+                self.__mainCharacter.changePrevisionnalX(0)
+
+            # on check pour les collisions théoriques en Y
+            if blok.getHitbox().Rect.colliderect(self.__mainCharacter.Coordinate.X,
+                                                 self.__mainCharacter.Coordinate.Y + dy,
+                                                 self.__mainCharacter.getHitbox().width,
+                                                 self.__mainCharacter.getHitbox().height):
+
+                if self.__mainCharacter.VelY < 0:
+                    self.__mainCharacter.changePrevisionnalY(
+                        blok.getHitbox().Rect.bottom - self.__mainCharacter.getHitbox().top
+                    )
+                    self.__mainCharacter.VelY = 0
+
+                elif self.__mainCharacter.VelY >= 0:
+                    self.__mainCharacter.changePrevisionnalY(
+                        blok.getHitbox().Rect.top - self.__mainCharacter.getHitbox().bottom
+                    )
+                    self.__mainCharacter.VelY = 0
+                    self.__mainCharacter.IsInAir = False
 
     @property
     def FPS(self) -> int:

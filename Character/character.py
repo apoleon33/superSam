@@ -18,12 +18,18 @@ class Character(ABC):
     __maxJumpHeight: int
     __jumpCount: int
 
+    __velY: int
+    __isInAir: bool
+
     __animationSet: AnimationSet
     __currentAnimation: Image
 
     __rect: pygame.Rect
     __direction: str
     __hitbox: Hitbox
+
+    __px: int
+    __py: int
 
     def __init__(self, name: str, animationSet: AnimationSet) -> None:
         """
@@ -38,8 +44,14 @@ class Character(ABC):
         self.__jumpStatus = False
         self.__jumpCount = 0
 
+        self.__velY = 0
+        self.__isInAir = False
+
         self.setHitbox(0, 0)
         self.__direction = "afk"  # autres versions possible: "droite", "gauche", "haut", "bas"
+
+        self.__py = 0
+        self.__px = 0
 
     def setBehaviorMove(self, behaviorMove: BehaviorMove) -> None:
         """
@@ -51,33 +63,37 @@ class Character(ABC):
         if self.__behaviorMove.Character is not self:  # double flèche en UML
             self.__behaviorMove.Character = self
 
-    def move_right(self):
+    def move_right(self) -> int:
         """
         Fonction appelée dès que le mob doit se déplacer à gauche.
         :return: Rien
         """
-        self.__behaviorMove.move_right()
         self.__currentAnimation = self.__animationSet.getMoveRightAnimation()
         self.__direction = "droite"
+        return self.__behaviorMove.move_right()
 
-    def move_left(self):
+    def move_left(self) -> int:
         """
         Fonction appelée dès que le mob doit se déplacer à droit.
         :return: Rien
         """
-        self.__behaviorMove.move_left()
         self.__currentAnimation = self.__animationSet.getMoveLeftAnimation()
         self.__direction = "gauche"
+        return self.__behaviorMove.move_left()
 
-    def jump(self):
+    def jump(self) -> int:
         """
         Fonction appelée dès que le mob doit sauter.
-        :return: Rien
+        :return: un entier pour ne plus rien casser
         """
-        if not self.__jumpStatus:
-            self.__jumpStatus = True
-            self.__jumpCount = self.__maxJumpHeight
-        self.__currentAnimation = self.__animationSet.getJumpAnimation()
+        # if not self.__jumpStatus:
+        #     self.__jumpStatus = True
+        #     self.__jumpCount = self.__maxJumpHeight
+        # self.__currentAnimation = self.__animationSet.getJumpAnimation()
+
+        self.__velY = self.__behaviorMove.jump()
+        self.__jumpStatus = True
+        return 0
 
     def checkJump(self):
         """
@@ -113,6 +129,35 @@ class Character(ABC):
         """
         return self.__currentAnimation
 
+    def changePrevisionnalX(self, newX: int):
+        self.__px = newX
+
+    def changePrevisionnalY(self, newY: int):
+        self.__py = newY
+
+    def getPrevisionnalCoordinate(self) -> (int, int):
+        return self.__px, self.__py
+
+    def updateCoordinate(self):
+        self.__coordinate.X += self.__px
+        self.__coordinate.Y += self.__py
+
+        self.__px = 0
+        self.__py = 0
+
+    def setHitbox(self, width: int, height: int):
+        """
+        Définit la taille de la hitbox du personnage
+        :param width: Sa largeur
+        :param height: Sa hauteur
+        :return: Rien
+        """
+        # self.__rect = pygame.Rect(self.__coordinate.X, self.__coordinate.Y, width, height)
+        self.__hitbox = Hitbox(width, height, self.__coordinate)
+
+    def getHitbox(self) -> pygame.Rect:
+        return self.__hitbox.Rect
+
     @property
     def Coordinate(self) -> Coordinate:
         return self.__coordinate
@@ -141,15 +186,18 @@ class Character(ABC):
     def Direction(self, direction: str) -> None:
         self.__direction = direction
 
-    def setHitbox(self, width: int, height: int):
-        """
-        Définit la taille de la hitbox du personnage
-        :param width: Sa largeur
-        :param height: Sa hauteur
-        :return: Rien
-        """
-        # self.__rect = pygame.Rect(self.__coordinate.X, self.__coordinate.Y, width, height)
-        self.__hitbox = Hitbox(width, height, self.__coordinate)
+    @property
+    def VelY(self) -> int:
+        return self.__velY
 
-    def getHitbox(self) -> pygame.Rect:
-        return self.__hitbox.Rect
+    @VelY.setter
+    def VelY(self, velY: int):
+        self.__velY = velY
+
+    @property
+    def IsInAir(self) -> bool:
+        return self.__isInAir
+
+    @IsInAir.setter
+    def IsInAir(self, value: bool):
+        self.__isInAir = value
