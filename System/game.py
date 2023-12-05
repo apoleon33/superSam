@@ -91,6 +91,8 @@ class Game:
             :return: Rien
             """
             pygame.draw.rect(self.__screen, (0, 255, 0), self.__mainCharacter.getHitbox())
+            for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
+                pygame.draw.rect(self.__screen, (255, 0, 0), block.getHitbox().Rect)
             # 6pygame.draw.rect(self.__screen, (255, 0, 0), self.testCollision)
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
@@ -105,7 +107,7 @@ class Game:
         # affichage de Samy
         samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
                                     rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
-        # TODO: trouver un meilleur moyen de le faire car la ça marche pas en l'air
+
         if self.__mainCharacter.Direction == "gauche":
             samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
                                         rescale=[True, 80, MAIN_CHARACTER_HEIGHT], inverse=True)
@@ -156,40 +158,40 @@ class Game:
         :return: Rien
         """
 
-        self.__mainCharacter.IsInAir = True
+        character.IsInAir = True
         for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
             blok: Block = block  # histoire d'avoir l'autocomplétion
 
-            prev = self.__mainCharacter.getPrevisionnalCoordinate()
+            prev = character.getPrevisionnalCoordinate()
             dx: int = prev[0]
             dy: int = prev[1]
 
             # on check les collisions théoriques en x
             if blok.getHitbox().Rect.colliderect(
-                    self.__mainCharacter.Coordinate.X + dx,
-                    self.__mainCharacter.Coordinate.Y,
-                    self.__mainCharacter.getHitbox().width,
-                    self.__mainCharacter.getHitbox().height):
-                self.__mainCharacter.changePrevisionnalX(0)
+                    character.Coordinate.X + dx,
+                    character.Coordinate.Y,
+                    character.getHitbox().width,
+                    character.getHitbox().height):
+                character.changePrevisionnalX(0)
 
             # on check pour les collisions théoriques en Y
-            if blok.getHitbox().Rect.colliderect(self.__mainCharacter.Coordinate.X,
-                                                 self.__mainCharacter.Coordinate.Y + dy,
-                                                 self.__mainCharacter.getHitbox().width,
-                                                 self.__mainCharacter.getHitbox().height):
+            if blok.getHitbox().Rect.colliderect(character.Coordinate.X,
+                                                 character.Coordinate.Y + dy,
+                                                 character.getHitbox().width,
+                                                 character.getHitbox().height):
 
-                if self.__mainCharacter.VelY < 0:
-                    self.__mainCharacter.changePrevisionnalY(
-                        blok.getHitbox().Rect.bottom - self.__mainCharacter.getHitbox().top
+                if character.VelY < 0:
+                    character.changePrevisionnalY(
+                        blok.getHitbox().Rect.bottom - character.getHitbox().top
                     )
-                    self.__mainCharacter.VelY = 0
+                    character.VelY = 0
 
-                elif self.__mainCharacter.VelY >= 0:
-                    self.__mainCharacter.changePrevisionnalY(
-                        blok.getHitbox().Rect.top - self.__mainCharacter.getHitbox().bottom
+                elif character.VelY >= 0:
+                    character.changePrevisionnalY(
+                        blok.getHitbox().Rect.top - character.getHitbox().bottom
                     )
-                    self.__mainCharacter.VelY = 0
-                    self.__mainCharacter.IsInAir = False
+                    character.VelY = 0
+                    character.IsInAir = False
 
     @property
     def FPS(self) -> int:
