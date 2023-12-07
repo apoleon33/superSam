@@ -1,11 +1,11 @@
-HEIGHT: int = int(1080 / 1.25)
-WIDTH: int = int(HEIGHT * (16 / 9))
+HEIGHT: int = int(1920)
+WIDTH: int = int(1056)
 
 FPS: int = 80
 GRAVITY: int = int(HEIGHT * (5 / (1080 / 2)))
 
 MAIN_CHARACTER_HEIGHT: int = int(64)
-MAIN_CHARACTER_WIDTH: int = int(33)
+MAIN_CHARACTER_WIDTH: int = int(32)
 MAIN_CHARACTER_SPEED: int = int(WIDTH * (5 / (1920 / 2)))
 
 HITBOX = False
