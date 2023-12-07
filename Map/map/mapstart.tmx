@@ -3,9 +3,9 @@
  <tileset firstgid="1" source="assets/blocks/grass/grass.tsx"/>
  <tileset firstgid="3" source="assets/blocks/tunnel/porte/door.tsx"/>
  <tileset firstgid="18" source="assets/blocks/beton/beton.tsx"/>
- <tileset firstgid="28" source="../../assets/blocks/tunnel/porte/door.tsx"/>
- <tileset firstgid="43" source="../../assets/blocks/beton/beton.tsx"/>
- <tileset firstgid="53" source="../../assets/blocks/grass/grass.tsx"/>
+ <tileset firstgid="28" source="assets/blocks/tunnel/porte/door.tsx"/>
+ <tileset firstgid="43" source="assets/blocks/beton/beton.tsx"/>
+ <tileset firstgid="53" source="assets/blocks/grass/grass.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="33">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,43,43,

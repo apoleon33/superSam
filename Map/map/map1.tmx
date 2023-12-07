@@ -3,9 +3,9 @@
  <tileset firstgid="1" source="assets/blocks/beton/beton.tsx"/>
  <tileset firstgid="11" source="assets/blocks/tunnel/elevator/elevator1.tsx"/>
  <tileset firstgid="31" source="assets/blocks/tunnel/porte/door.tsx"/>
- <tileset firstgid="46" source="../../assets/blocks/beton/beton.tsx"/>
- <tileset firstgid="56" source="../../assets/blocks/tunnel/porte/door.tsx"/>
- <tileset firstgid="71" source="../../assets/blocks/tunnel/elevator/elevator1.tsx"/>
+ <tileset firstgid="46" source="assets/blocks/beton/beton.tsx"/>
+ <tileset firstgid="56" source="assets/blocks/tunnel/porte/door.tsx"/>
+ <tileset firstgid="71" source="assets/blocks/tunnel/elevator/elevator1.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="36">
   <data encoding="csv">
 46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,

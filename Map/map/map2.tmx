@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="33" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="38">
- <tileset firstgid="1" source="../../assets/blocks/beton/beton.tsx"/>
- <tileset firstgid="11" source="../../assets/blocks/tunnel/porte/door.tsx"/>
- <tileset firstgid="26" source="../../assets/blocks/tunnel/elevator/elevator2.tsx"/>
+ <tileset firstgid="1" source="assets/blocks/beton/beton.tsx"/>
+ <tileset firstgid="11" source="assets/blocks/tunnel/porte/door.tsx"/>
+ <tileset firstgid="26" source="assets/blocks/tunnel/elevator/elevator2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="33">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
