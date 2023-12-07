@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextlayerid="3" nextobjectid="38">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="36" tilewidth="32" tileheight="30" infinite="0" nextlayerid="3" nextobjectid="39">
  <tileset firstgid="1" source="assets/blocks/beton/beton.tsx"/>
  <tileset firstgid="65" source="assets/blocks/tunnel/elevator/elevator1.tsx"/>
  <tileset firstgid="303" source="assets/blocks/tunnel/porte/door.tsx"/>
@@ -77,5 +77,6 @@
   <object id="34" type="collision" x="1.73611" y="1.73611" width="27.7778" height="385.417"/>
   <object id="35" type="collision" x="34.6444" y="2.03791" width="1854.49" height="26.4928"/>
   <object id="37" type="tunnel" x="0" y="387.202" width="126.35" height="152.843"/>
+  <object id="38" x="30.5686" y="-63.1751"/>
  </objectgroup>
 </map>

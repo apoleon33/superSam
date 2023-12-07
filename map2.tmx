@@ -57,7 +57,6 @@
   <object id="24" type="collision" x="1889.94" y="1.85288" width="27.7932" height="828.238"/>
   <object id="26" type="collision" x="0" y="0" width="31.499" height="318.696"/>
   <object id="28" type="collision" x="34.8218" y="0" width="1863.99" height="30.7251"/>
-  <object id="31" x="1827.12" y="866.448" width="90.127" height="155.674"/>
   <object id="32" type="tunnel" x="1826.05" y="865.209" width="92.2131" height="157.104"/>
  </objectgroup>
 </map>
