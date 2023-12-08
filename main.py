@@ -20,21 +20,6 @@ sami.Coordinate.Y, sami.Coordinate.X = HEIGHT - MAIN_CHARACTER_HEIGHT, 0
 # création de la map
 accueil = Level("Accueil")
 accueil.Background = Image("assets/levels/atrium.png")
-accueil.addBlock(Concrete(Coordinate(250, HEIGHT - 123)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2), HEIGHT - 246)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 2, HEIGHT - 246)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 3, HEIGHT - (246 + 123))))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 3, HEIGHT - 246)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 3, HEIGHT - (246 + 123 + 123))))
-accueil.addBlock(Concrete(Coordinate(0, HEIGHT - 123)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 4, HEIGHT - (246 + (2 * 123)))))
-
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - (246 + (1 * 123)))))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 246)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 7, HEIGHT - 123)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 8, HEIGHT - 123)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 9, HEIGHT - 123)))
-accueil.addBlock(Concrete(Coordinate(250 + int(256 / 2) * 10, HEIGHT - 123)))
 
 sortie = Door()
 sortie.Coordinate.X = 250 + int(256 / 2) * 9
