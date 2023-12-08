@@ -10,4 +10,4 @@ class Concrete(Block):
         height = 32
         super().__init__(texture=Image("assets/blocks/beton/Beton.tiff"), width=width, height=height,
                          coordinate=coordinate)
-        self.setHitbox(Hitbox(width=width, height=height, initialCoordinate=coordinate))
+        # self.setHitbox(Hitbox(width=width, height=height, initialCoordinate=coordinate))
