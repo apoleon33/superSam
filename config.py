@@ -1,5 +1,5 @@
-HEIGHT: int = int(1056)
-WIDTH: int = int(1920)
+HEIGHT: int = 800
+WIDTH: int = 1440
 
 FPS: int = 80
 GRAVITY: int = int(HEIGHT * (5 / (1080 / 2)))
