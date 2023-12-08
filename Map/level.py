@@ -58,8 +58,12 @@ class Level:
         for ligne in range(len(blocs)):
             for colonne in range(len(blocs[ligne])):
                 match blocs[ligne][colonne]:
+                    # TODO: unifier pour que les codes soient les mêmes pour tt les fichiers
                     case 1:  # béton
                         self.addBlock(Concrete(Coordinate(x, y)))
+
+                    case 25:  # porte
+                        self.addTunnel(Door(Coordinate(x, y)))
 
                     case _:  # si c'est vide
                         pass

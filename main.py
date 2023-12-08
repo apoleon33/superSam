@@ -19,11 +19,6 @@ sami.Coordinate.Y, sami.Coordinate.X = HEIGHT - MAIN_CHARACTER_HEIGHT, 0
 accueil = Level("Accueil")
 accueil.Background = Image("assets/levels/atrium.png")
 
-sortie = Door()
-sortie.Coordinate.X = 250 + int(256 / 2) * 9
-sortie.Coordinate.Y = HEIGHT - 123 - 538
-accueil.addTunnel(sortie)
-
 campus = Map(WIDTH, HEIGHT)
 campus.addLevel(0, 0, accueil)
 
@@ -31,7 +26,7 @@ campus.addLevel(0, 0, accueil)
 game = Game(campus, sami)
 game.Gravity = GRAVITY
 
-accueil.setTmx("map2.tmx")
+accueil.setTmx("assets/map/map2.tmx")
 accueil.createLevel()
 
 # images par secondes
