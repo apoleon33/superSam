@@ -9,7 +9,7 @@ from Map.map import Map
 from Map.tunnel import Tunnel
 from System.control import Control
 from System.story import Story
-from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX
+from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX, MAIN_CHARACTER_WIDTH
 from coordinate import Coordinate
 from hitbox import Hitbox
 from image import Image
@@ -117,11 +117,11 @@ class Game:
 
         # affichage de Samy
         samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
-                                    rescale=[True, 80, MAIN_CHARACTER_HEIGHT])
+                                    rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT])
 
         if self.__mainCharacter.Direction == "gauche":
             samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
-                                        rescale=[True, 80, MAIN_CHARACTER_HEIGHT], inverse=True)
+                                        rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT], inverse=True)
         self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
