@@ -2,9 +2,7 @@ import pygame
 
 from Character.behaviorMove.behaviorMoveKeyboard import BehaviorMoveKeyboard
 from Character.mainCharacter import MainCharacter
-from Map.concrete import Concrete
 from Map.door import Door
-from Map.elevator import Elevator
 from Map.level import Level
 from Map.map import Map
 from System.game import Game
@@ -32,6 +30,9 @@ campus.addLevel(0, 0, accueil)
 # création du jeux en lui même
 game = Game(campus, sami)
 game.Gravity = GRAVITY
+
+accueil.setTmx("map2.tmx")
+accueil.createLevel()
 
 # images par secondes
 clock = pygame.time.Clock()

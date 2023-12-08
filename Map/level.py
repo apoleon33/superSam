@@ -1,11 +1,14 @@
 from Character.character import Character
 from Items.item import Item
 from Map.block import Block
+from Map.concrete import Concrete
 from Map.door import Door
 from Map.elevator import Elevator
+from Map.tmxMap import TmxMap
 from Map.tunnel import Tunnel
 from image import Image
 from coordinate import Coordinate
+
 
 def loadFromBnp(self, image: Image):
     """
@@ -24,6 +27,8 @@ class Level:
     __tunnels: [Tunnel]
     __organisation: []
     __blocks: [Block]
+
+    __tmx: TmxMap
 
     def __init__(self, name: str):
         self.__name = name
@@ -45,20 +50,22 @@ class Level:
     def getName(self) -> str:
         return self.__name
 
-    def CreateLevel(self):
-        """
-        On crée un niveau avec un nom, un fond, des items, des personnages, des tunnels, une organisation et des blocs
-        :return:
-        """
+    def createLevel(self):
 
-        for mob in self.__characters:
-            self.__organisation.append(mob)
-        for item in self.__items:
-            self.__organisation.append(item)
-        for tunnel in self.__tunnels:
-            self.__organisation.append(tunnel)
-        for block in self.__blocks:
-            self.__organisation.append(block)
+        blocs: list[list[int]] = self.__tmx.getData().layers[0].data
+        x, y = 0, 0
+
+        for ligne in range(len(blocs)):
+            for colonne in range(len(blocs[ligne])):
+                match blocs[ligne][colonne]:
+                    case 1:  # béton
+                        self.addBlock(Concrete(Coordinate(x, y)))
+
+                    case _:  # si c'est vide
+                        pass
+                x += 32
+            y += 32
+            x = 0
 
     def addCharacter(self, character: Character):
         """
@@ -119,3 +126,9 @@ class Level:
         :return: les tunnels du niveau
         """
         return self.__tunnels
+
+    def setTmx(self, path: str):
+        self.__tmx = TmxMap(path)
+
+    def getTmx(self) -> TmxMap:
+        return self.__tmx

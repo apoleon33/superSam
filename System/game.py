@@ -44,11 +44,11 @@ class Game:
         pygame.key.set_repeat(1, 1)
 
         # essai chargement carte
-        tmx_data = pytmx.util_pygame.load_pygame("map2.tmx")
-        map_data = pyscroll.data.TiledMapData(tmx_data)
-        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__screen.get_size())
+        # tmx_data = self.__map.getLevel(self.__camera.X, self.__camera.Y).getTmx().getData()
+        # map_data = pyscroll.data.TiledMapData(tmx_data)
+        # map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__screen.get_size())
 
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer)
+        # self.group = pyscroll.PyscrollGroup(map_layer=map_layer)
 
         # optimisation
         self.actualBackground = None
@@ -110,7 +110,7 @@ class Game:
         self.actualBackground = self.loadImage(actualLevel.Background, darken=True)
         self.__screen.blit(self.actualBackground, (0, 0))
 
-        self.group.draw(self.__screen)
+        # self.group.draw(self.__screen)
 
         if hitbox:
             displayHitBox()

@@ -1,5 +1,5 @@
 import pytmx
-from pytmx import TiledMap
+from pytmx import TiledMap, TiledObject
 
 from image import Image
 
@@ -8,14 +8,14 @@ class TmxMap:
     __file: Image
     __tmxData: pytmx.TiledMap
 
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.__file = Image(path=path)
         self.__loadData()
 
     def __loadData(self):
         self.__tmxData = pytmx.util_pygame.load_pygame(self.__file.getPath())
 
-    def getBlocks(self) -> list:
+    def getBlocks(self) -> list[TiledObject]:
         blockList = []
         for objects in self.__tmxData.objects:
             if objects.type == "collision":
