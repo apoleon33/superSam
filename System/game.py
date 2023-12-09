@@ -101,8 +101,9 @@ class Game:
             :return: Rien
             """
             pygame.draw.rect(self.__screen, (0, 255, 0), self.__mainCharacter.getHitbox())
-            for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
-                pygame.draw.rect(self.__screen, (255, 0, 0), block.getHitbox().Rect)
+
+            for hitboxe in self.__map.getLevel(self.__camera.X, self.__camera.Y).getHitboxes():
+                pygame.draw.rect(self.__screen, (255, 0, 0), hitboxe.Rect)
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
@@ -111,19 +112,6 @@ class Game:
         self.__screen.blit(self.actualBackground, (0, 0))
 
         # self.group.draw(self.__screen)
-
-        if hitbox:
-            displayHitBox()
-
-        # affichage de Samy
-        samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
-                                    rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT])
-
-        if self.__mainCharacter.Direction == "gauche":
-            samySprite = self.loadImage(self.__mainCharacter.getCurrentAnimation(),
-                                        rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT], inverse=True)
-        self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
-        self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
         # affichage des blocks
         for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
@@ -135,6 +123,23 @@ class Game:
         for tunnel in self.__map.getLevel(self.__camera.X, self.__camera.Y).getTunnels():
             newTunnel = self.loadImage(tunnel.Sprite)
             self.__screen.blit(newTunnel, (tunnel.Coordinate.X, tunnel.Coordinate.Y))
+
+        if hitbox:
+            displayHitBox()
+
+        # affichage de Samy
+        samySprite = self.loadImage(
+            self.__mainCharacter.getCurrentAnimation(),
+            rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT]
+        )
+
+        if self.__mainCharacter.Direction == "gauche":
+            samySprite = self.loadImage(
+                self.__mainCharacter.getCurrentAnimation(),
+                rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT], inverse=True
+            )
+        self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
+        self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
 
     def setStory(self, story: Story):
         pass
@@ -175,14 +180,14 @@ class Game:
         """
 
         character.IsInAir = True
-        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
+        for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getHitboxes():
 
             prev = character.getPrevisionnalCoordinate()
             dx: int = prev[0]
             dy: int = prev[1]
 
             # on check les collisions théoriques en x
-            if block.getHitbox().Rect.colliderect(
+            if block.Rect.colliderect(
                     character.Coordinate.X + dx,
                     character.Coordinate.Y,
                     character.getHitbox().width,
@@ -190,20 +195,20 @@ class Game:
                 character.changePrevisionnalX(0)
 
             # on check pour les collisions théoriques en Y
-            if block.getHitbox().Rect.colliderect(character.Coordinate.X,
-                                                  character.Coordinate.Y + dy,
-                                                  character.getHitbox().width,
-                                                  character.getHitbox().height):
+            if block.Rect.colliderect(character.Coordinate.X,
+                                      character.Coordinate.Y + dy,
+                                      character.getHitbox().width,
+                                      character.getHitbox().height):
 
                 if character.VelY < 0:
                     character.changePrevisionnalY(
-                        block.getHitbox().Rect.bottom - character.getHitbox().top
+                        block.Rect.bottom - character.getHitbox().top
                     )
                     character.VelY = 0
 
                 elif character.VelY >= 0:
                     character.changePrevisionnalY(
-                        block.getHitbox().Rect.top - character.getHitbox().bottom
+                        block.Rect.top - character.getHitbox().bottom
                     )
                     character.VelY = 0
                     character.IsInAir = False

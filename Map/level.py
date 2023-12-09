@@ -144,6 +144,9 @@ class Level:
     def addHitbox(self, hitbox: Hitbox):
         self.__hitboxes.append(hitbox)
 
+    def getHitboxes(self) -> list[Hitbox]:
+        return self.__hitboxes
+
     def setTmx(self, path: str):
         self.__tmx = TmxMap(path)
 
