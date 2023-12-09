@@ -10,15 +10,6 @@ from image import Image
 from coordinate import Coordinate
 
 
-def loadFromBnp(self, image: Image):
-    """
-    On charge un niveau à partir d'une image
-    :param image:
-    :return:
-    """
-    pass
-
-
 class Level:
     __name: str
     __background: Image
