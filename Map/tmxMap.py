@@ -1,3 +1,5 @@
+from typing import Iterable
+
 import pytmx
 from pytmx import TiledMap, TiledObject
 
@@ -36,3 +38,6 @@ class TmxMap:
 
     def getData(self) -> TiledMap:
         return self.__tmxData
+
+    def getObject(self) -> Iterable[TiledObject]:
+        return self.__tmxData.objects

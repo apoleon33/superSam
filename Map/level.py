@@ -6,6 +6,7 @@ from Map.door import Door
 from Map.elevator import Elevator
 from Map.tmxMap import TmxMap
 from Map.tunnel import Tunnel
+from hitbox import Hitbox
 from image import Image
 from coordinate import Coordinate
 
@@ -17,7 +18,8 @@ class Level:
     __characters: [Character]
     __tunnels: [Tunnel]
     __organisation: []
-    __blocks: [Block]
+    __blocks: list[Block]
+    __hitboxes: list[Hitbox]
 
     __tmx: TmxMap
 
@@ -29,6 +31,7 @@ class Level:
         self.background = Image("")  # à mettre: image de fond par défault
         self.__organisation = []
         self.__blocks = []
+        self.__hitboxes = []
 
     @property
     def Background(self) -> Image:
@@ -43,6 +46,7 @@ class Level:
 
     def createLevel(self):
 
+        # création des blocs de la map
         blocs: list[list[int]] = self.__tmx.getData().layers[0].data
         x, y = 0, 0
 
@@ -61,6 +65,21 @@ class Level:
                 x += 32
             y += 32
             x = 0
+
+        # création des hitbox de la map
+        objets = self.__tmx.getObject()
+        for object in objets:
+            if object.type == "collision":
+                self.addHitbox(
+                    Hitbox(
+                        width=object.width,
+                        height=object.height,
+                        initialCoordinate=Coordinate(
+                            x=object.x,
+                            y=object.y
+                        )
+                    )
+                )
 
     def addCharacter(self, character: Character):
         """
@@ -94,33 +113,36 @@ class Level:
         """
         self.__tunnels.append(tunnel)
 
-    def getCharacters(self) -> [Character]:
+    def getCharacters(self) -> list[Character]:
         """
         On récupère les personnages du niveau
         :return: les personnages du niveau
         """
         return self.__characters
 
-    def getBlocks(self) -> [Block]:
+    def getBlocks(self) -> list[Block]:
         """
         On récupère les blocs du niveau
         :return: les blocs du niveau
         """
         return self.__blocks
 
-    def getItems(self) -> [Item]:
+    def getItems(self) -> list[Item]:
         """
         On récupère les items du niveau
         :return: les items du niveau
         """
         return self.__items
 
-    def getTunnels(self) -> [Tunnel]:
+    def getTunnels(self) -> list[Tunnel]:
         """
         On récupère les tunnels du niveau
         :return: les tunnels du niveau
         """
         return self.__tunnels
+
+    def addHitbox(self, hitbox: Hitbox):
+        self.__hitboxes.append(hitbox)
 
     def setTmx(self, path: str):
         self.__tmx = TmxMap(path)

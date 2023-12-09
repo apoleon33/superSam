@@ -133,9 +133,8 @@ class Game:
 
         # affichage des tunnels
         for tunnel in self.__map.getLevel(self.__camera.X, self.__camera.Y).getTunnels():
-            tun: Tunnel = tunnel
-            newTunnel = self.loadImage(tun.Sprite)
-            self.__screen.blit(newTunnel, (tun.Coordinate.X, tun.Coordinate.Y))
+            newTunnel = self.loadImage(tunnel.Sprite)
+            self.__screen.blit(newTunnel, (tunnel.Coordinate.X, tunnel.Coordinate.Y))
 
     def setStory(self, story: Story):
         pass
@@ -177,14 +176,13 @@ class Game:
 
         character.IsInAir = True
         for block in self.__map.getLevel(self.__camera.X, self.__camera.Y).getBlocks():
-            blok: Block = block  # histoire d'avoir l'autocomplétion
 
             prev = character.getPrevisionnalCoordinate()
             dx: int = prev[0]
             dy: int = prev[1]
 
             # on check les collisions théoriques en x
-            if blok.getHitbox().Rect.colliderect(
+            if block.getHitbox().Rect.colliderect(
                     character.Coordinate.X + dx,
                     character.Coordinate.Y,
                     character.getHitbox().width,
@@ -192,20 +190,20 @@ class Game:
                 character.changePrevisionnalX(0)
 
             # on check pour les collisions théoriques en Y
-            if blok.getHitbox().Rect.colliderect(character.Coordinate.X,
-                                                 character.Coordinate.Y + dy,
-                                                 character.getHitbox().width,
-                                                 character.getHitbox().height):
+            if block.getHitbox().Rect.colliderect(character.Coordinate.X,
+                                                  character.Coordinate.Y + dy,
+                                                  character.getHitbox().width,
+                                                  character.getHitbox().height):
 
                 if character.VelY < 0:
                     character.changePrevisionnalY(
-                        blok.getHitbox().Rect.bottom - character.getHitbox().top
+                        block.getHitbox().Rect.bottom - character.getHitbox().top
                     )
                     character.VelY = 0
 
                 elif character.VelY >= 0:
                     character.changePrevisionnalY(
-                        blok.getHitbox().Rect.top - character.getHitbox().bottom
+                        block.getHitbox().Rect.top - character.getHitbox().bottom
                     )
                     character.VelY = 0
                     character.IsInAir = False
