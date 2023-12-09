@@ -29,10 +29,10 @@ class Map:
         self.__height = height
 
     def addLevel(self, x: int, y: int, level: Level):
-        while y > len(self.__levels):
+        while y >= len(self.__levels):
             self.__levels.append([])
 
-        while x > len(self.__levels[y]):
+        while x >= len(self.__levels[y]):
             self.__levels[y].append(EmptyLevel())
 
         self.__levels[y][x] = level
