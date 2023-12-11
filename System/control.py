@@ -8,9 +8,9 @@ class Control:
     __quitKeys: [pygame.constants]
 
     def __init__(self):
-        self.__leftKeys = [pygame.K_LEFT, pygame.K_KP4]
-        self.__rightKeys = [pygame.K_RIGHT, pygame.K_KP6]
-        self.__jumpKeys = [pygame.K_UP, pygame.K_KP8]
+        self.__leftKeys = [pygame.K_LEFT, pygame.K_KP4, pygame.K_q]
+        self.__rightKeys = [pygame.K_RIGHT, pygame.K_KP6, pygame.K_d]
+        self.__jumpKeys = [pygame.K_UP, pygame.K_KP8, pygame.K_z, pygame.K_SPACE]
         self.__quitKeys = [pygame.QUIT]
 
     def getLeftKeys(self) -> list:
