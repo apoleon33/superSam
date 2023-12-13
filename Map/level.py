@@ -4,6 +4,7 @@ from Map.block import Block
 from Map.concrete import Concrete
 from Map.door import Door
 from Map.elevator import Elevator
+from Map.grass import Grass
 from Map.tmxMap import TmxMap
 from Map.tunnel import Tunnel
 from hitbox import Hitbox
@@ -20,6 +21,7 @@ class Level:
     __organisation: []
     __blocks: list[Block]
     __hitboxes: list[Hitbox]
+    __mainCharacterSpawn: Coordinate
 
     __tmx: TmxMap
 
@@ -51,20 +53,38 @@ class Level:
         x, y = 0, 0
 
         for ligne in range(len(blocs)):
+            print(blocs[ligne])
             for colonne in range(len(blocs[ligne])):
                 match blocs[ligne][colonne]:
                     # TODO: unifier pour que les codes soient les mêmes pour tt les fichiers
-                    case 1:  # béton
+                    case 1:  # beton
                         self.addBlock(Concrete(Coordinate(x, y)))
 
-                    case 25:  # porte
+                    case 2:  # élévator
+                        self.addTunnel(Elevator(Coordinate(x, y)))
+
+                    case 14:  # herbe
+                        self.addBlock(Grass(Coordinate(x, y)))
+
+                    case 15:  # herbe
+                        self.addBlock(Grass(Coordinate(x, y)))
+
+                    case 19:  # herbe
+                        self.addBlock(Grass(Coordinate(x, y)))
+
+                    case 20:  # herbe
+                        self.addBlock(Grass(Coordinate(x, y)))
+
+                    case 22:  # porte
                         self.addTunnel(Door(Coordinate(x, y)))
 
                     case _:  # si c'est vide
                         pass
+
                 x += 32
             y += 32
             x = 0
+        print()
 
         # création des hitbox de la map
         objets = self.__tmx.getObject()
@@ -152,3 +172,11 @@ class Level:
 
     def getTmx(self) -> TmxMap:
         return self.__tmx
+
+    @property
+    def MainCharacterSpawn(self) -> Coordinate:
+        return self.__mainCharacterSpawn
+
+    @MainCharacterSpawn.setter
+    def MainCharacterSpawn(self, coodinate: Coordinate):
+        self.__mainCharacterSpawn = coodinate
