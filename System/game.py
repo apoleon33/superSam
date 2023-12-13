@@ -1,15 +1,12 @@
 import pygame
-import pytmx
-import pyscroll
 
 from Character.character import Character
 from Character.mainCharacter import MainCharacter
-from Map.block import Block
 from Map.map import Map
 from Map.tunnel import Tunnel
 from System.control import Control
 from System.story import Story
-from config import FPS, MAIN_CHARACTER_HEIGHT, HEIGHT, MAIN_CHARACTER_SPEED, HITBOX, MAIN_CHARACTER_WIDTH
+from config import FPS, MAIN_CHARACTER_HEIGHT, MAIN_CHARACTER_SPEED, HITBOX, MAIN_CHARACTER_WIDTH, HEIGHT, WIDTH
 from coordinate import Coordinate
 from hitbox import Hitbox
 from image import Image
@@ -82,10 +79,11 @@ class Game:
         )
 
         self.handleCollisions(self.__mainCharacter)
-
+        self.handleTunnelCollision()
         self.__mainCharacter.updateCoordinate()
 
         self.displayGame(hitbox=HITBOX)
+        print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
         return True
 
@@ -136,7 +134,8 @@ class Game:
         if self.__mainCharacter.Direction == "gauche":
             samySprite = self.loadImage(
                 self.__mainCharacter.getCurrentAnimation(),
-                rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT], inverse=True
+                rescale=[True, MAIN_CHARACTER_WIDTH, MAIN_CHARACTER_HEIGHT],
+                inverse=True
             )
         self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
@@ -212,6 +211,35 @@ class Game:
                     )
                     character.VelY = 0
                     character.IsInAir = False
+
+    def handleTunnelCollision(self):
+        # on check les collisions avec les tunnels
+        for tunnel in self.__map.getLevel(self.__camera.X, self.__camera.Y).getTunnels():
+            prev = self.__mainCharacter.getPrevisionnalCoordinate()
+            dx: int = prev[0]
+            dy: int = prev[1]
+
+            if tunnel.Rect.Rect.colliderect(
+                    self.__mainCharacter.Coordinate.X + dx,
+                    self.__mainCharacter.Coordinate.Y,
+                    self.__mainCharacter.getHitbox().width,
+                    self.__mainCharacter.getHitbox().height):
+                self.changeLevel(tunnel)
+                self.__mainCharacter.Coordinate.X = self.__map.getLevel(self.__camera.X,
+                                                                        self.__camera.Y).MainCharacterSpawn.X
+                self.__mainCharacter.Coordinate.Y = self.__map.getLevel(self.__camera.X,
+                                                                        self.__camera.Y).MainCharacterSpawn.Y
+
+    def changeLevel(self, tunnel: Tunnel):
+        """
+        Comment passe-t-on d'un niveau à l'autre, en se basant sur la position du personnage au moment ou il touche le tunnel, et du type de tunnel
+        :return:
+        """
+        if tunnel.Type == "elevator":
+            # selon que la personne a pris un elevator en haut/base de l'écran
+            self.__camera.Y += -1 if self.__mainCharacter.Coordinate.Y <= int(HEIGHT / 2) else 1
+        else:
+            self.__camera.X += -1 if self.__mainCharacter.Coordinate.X <= int(WIDTH / 2) else 1
 
     @property
     def FPS(self) -> int:

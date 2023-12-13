@@ -38,9 +38,14 @@ class Map:
         self.__levels[y][x] = level
 
     def getLevel(self, x: int, y: int) -> Level:
-        return self.__levels[y][x]
+        return self.__levels[x][y]
 
     def Map(self, width: int, height: int):
         self.__width = width
         self.__height = height
         self.__levels = [[EmptyLevel()]]
+
+    def printLevel(self):
+        for x in range(len(self.__levels)):
+            for y in range(len(self.__levels[x])):
+                print(self.__levels[x][y].Background.getPath())
