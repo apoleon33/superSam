@@ -82,6 +82,9 @@ class Game:
         self.handleTunnelCollision()
         self.__mainCharacter.updateCoordinate()
 
+        if self.__mainCharacter.Coordinate.Y > HEIGHT:
+            return False
+
         self.displayGame(hitbox=HITBOX)
         print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
@@ -248,6 +251,8 @@ class Game:
             else:
                 self.__camera.Y += 1
 
+        self.__mainCharacter.Coordinate.X = self.__map.getLevel(self.__camera.X, self.__camera.Y).MainCharacterSpawn.X
+        self.__mainCharacter.Coordinate.Y = self.__map.getLevel(self.__camera.X, self.__camera.Y).MainCharacterSpawn.Y
 
 
     @property
