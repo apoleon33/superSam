@@ -83,7 +83,7 @@ class Game:
         self.__mainCharacter.updateCoordinate()
 
         self.displayGame(hitbox=HITBOX)
-        # print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
+        print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
         return True
 
