@@ -237,9 +237,15 @@ class Game:
         """
         if tunnel.Type == "elevator":
             # selon que la personne a pris un elevator en haut/base de l'écran
-            self.__camera.Y += -1 if self.__mainCharacter.Coordinate.Y <= int(HEIGHT / 2) else 1
+            if self.__mainCharacter.Coordinate.Y <= int(HEIGHT / 2):
+                self.__camera.Y += 1
+            else:
+                self.__camera.Y -= 1
         else:
-            self.__camera.X += -1 if self.__mainCharacter.Coordinate.X <= int(WIDTH / 2) else 1
+            if self.__mainCharacter.Coordinate.X <= int(WIDTH / 2):
+                self.__camera.X += 1
+            else:
+                self.__camera.X -= 1
 
     @property
     def FPS(self) -> int:
