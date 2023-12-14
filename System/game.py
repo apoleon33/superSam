@@ -83,7 +83,7 @@ class Game:
         self.__mainCharacter.updateCoordinate()
 
         self.displayGame(hitbox=HITBOX)
-        print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
+        # print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
         return True
 
@@ -235,17 +235,20 @@ class Game:
         Comment passe-t-on d'un niveau à l'autre, en se basant sur la position du personnage au moment ou il touche le tunnel, et du type de tunnel
         :return:
         """
+        print(tunnel.Type)
         if tunnel.Type == "elevator":
             # selon que la personne a pris un elevator en haut/base de l'écran
             if self.__mainCharacter.Coordinate.Y <= int(HEIGHT / 2):
-                self.__camera.Y += 1
+                self.__camera.X -= 1
             else:
-                self.__camera.Y -= 1
+                self.__camera.X += 1
         else:
             if self.__mainCharacter.Coordinate.X <= int(WIDTH / 2):
-                self.__camera.X += 1
+                self.__camera.Y -= 1
             else:
-                self.__camera.X -= 1
+                self.__camera.Y += 1
+
+
 
     @property
     def FPS(self) -> int:
