@@ -25,6 +25,8 @@ campus = Map(WIDTH, HEIGHT)
 game = Game(campus, sami)
 game.Gravity = GRAVITY
 
+game.Camera = Coordinate(0, 2)
+
 mapstart = Level("tutoriel")
 mapstart.Background = Image("assets/levels/atrium.png")
 mapstart.MainCharacterSpawn = Coordinate(0, 704)
@@ -51,10 +53,10 @@ third_level.Background = Image("assets/levels/atrium.png")
 third_level.MainCharacterSpawn = Coordinate(0, 0)
 third_level.setTmx("assets/map/map3.tmx")
 
-campus.addLevel(0, 0, mapstart)
+campus.addLevel(2, 0, mapstart)
 campus.addLevel(1, 0, first_lvl)
-campus.addLevel(1, 1, second_level)
-campus.addLevel(2, 1, third_level)
+campus.addLevel(0, 0, second_level)
+campus.addLevel(0, 1, third_level)
 
 
 sami.Coordinate.Y, sami.Coordinate.X = mapstart.MainCharacterSpawn.Y, mapstart.MainCharacterSpawn.X

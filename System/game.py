@@ -288,3 +288,11 @@ class Game:
 
         self.__alreadyLoadedPygameImages.append(loadedImage)
         return loadedImage
+
+    @property
+    def Camera(self) -> Coordinate:
+        return self.__camera
+
+    @Camera.setter
+    def Camera(self, camera: Coordinate) -> None:
+        self.__camera = camera
