@@ -34,15 +34,28 @@ mapstart.createLevel()
 accueil.setTmx("assets/map/map1.tmx")
 accueil.createLevel()
 
+first_lvl = Level("un")
+first_lvl.Background = Image("assets/levels/atrium.png")
+first_lvl.MainCharacterSpawn = Coordinate(0, 0)
+first_lvl.setTmx("assets/map/map1.tmx")
+first_lvl.createLevel()
+
 second_level = Level("deux")
 second_level.Background = Image("assets/levels/atrium.png")
 second_level.MainCharacterSpawn = Coordinate(0, 0)
 second_level.setTmx("assets/map/map2.tmx")
 second_level.createLevel()
 
+third_level = Level("trois")
+third_level.Background = Image("assets/levels/atrium.png")
+third_level.MainCharacterSpawn = Coordinate(0, 0)
+third_level.setTmx("assets/map/map3.tmx")
+
 campus.addLevel(0, 0, mapstart)
-campus.addLevel(1, 0, accueil)
-campus.addLevel(2, 0, second_level)
+campus.addLevel(1, 0, first_lvl)
+campus.addLevel(1, 1, second_level)
+campus.addLevel(2, 1, third_level)
+
 
 sami.Coordinate.Y, sami.Coordinate.X = mapstart.MainCharacterSpawn.Y, mapstart.MainCharacterSpawn.X
 
