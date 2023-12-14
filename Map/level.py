@@ -30,10 +30,11 @@ class Level:
         self.__items = []
         self.__characters = []
         self.__tunnels = []
-        self.background = Image("")  # à mettre: image de fond par défault
+        self.__background = Image("assets/levels/forest.jpg")  # à mettre: image de fond par défault
         self.__organisation = []
         self.__blocks = []
         self.__hitboxes = []
+        self.__mainCharacterSpawn = Coordinate(0, 0)
 
     @property
     def Background(self) -> Image:
@@ -61,7 +62,7 @@ class Level:
                         self.addBlock(Concrete(Coordinate(x, y)))
 
                     case 2:  # élévator
-                        self.addTunnel(Elevator(Coordinate(x, y)))
+                        self.addTunnel(Door(Coordinate(x, y)))
 
                     case 14:  # herbe
                         self.addBlock(Grass(Coordinate(x, y)))
