@@ -50,6 +50,10 @@ class Level:
         return self.__name
 
     def createLevel(self):
+        """
+        on remplis les listes de tunnels et de blocks, en se basant sur les données du tmx
+        :return:
+        """
         possibleName = ["beton", "grass", "door", "elevator"]
         possibleBlocs = [Concrete, Grass, Door, Elevator]
         blocNumber = [0 for _ in range(4)]
