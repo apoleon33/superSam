@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="31">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="35">
  <tileset firstgid="1" source="../blocks/grass/grass.tsx"/>
  <tileset firstgid="5" source="../blocks/tunnel/elevator/elevator2.tsx"/>
  <tileset firstgid="25" source="../blocks/beton/beton.tsx"/>
@@ -30,8 +30,8 @@
 9,10,11,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,
 13,14,15,16,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 17,18,19,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-21,22,23,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,
-1,2,1,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,4
+21,22,23,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1
 </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
@@ -49,7 +49,6 @@
   <object id="12" type="collision" x="26.6312" y="1.21051" width="1399.35" height="3.63152"/>
   <object id="13" type="collision" x="991.354" y="223.03" width="33.4054" height="33.4054"/>
   <object id="14" type="collision" x="289.841" y="450.973" width="28.4928" height="27.5103"/>
-  <object id="15" type="collision" x="449.99" y="355.669" width="28.4928" height="28.4928"/>
   <object id="18" type="collision" x="609.347" y="259.572" width="29.7476" height="26.8688"/>
   <object id="19" type="collision" x="800.307" y="130.986" width="31.6668" height="27.8284"/>
   <object id="20" type="collision" x="993.187" y="35.5052" width="29.2678" height="27.3486"/>
@@ -58,5 +57,9 @@
   <object id="23" type="tunnel" x="1345.36" y="0" width="89.2429" height="159.774"/>
   <object id="25" type="collision" x="576.435" y="291.18" width="29.6259" height="27.0865"/>
   <object id="29" type="fire" x="578.036" y="257.851" width="27.8031" height="30.3443"/>
+  <object id="31" type="collision" x="1184.48" y="224.344" width="31.3815" height="31.3815"/>
+  <object id="32" type="collision" x="1216.53" y="319.824" width="30.0461" height="30.7138"/>
+  <object id="33" type="collision" x="447.989" y="354.046" width="32.186" height="8.44883"/>
+  <object id="34" type="collision" x="462.875" y="362.898" width="3.62093" height="19.7139"/>
  </objectgroup>
 </map>
