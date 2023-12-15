@@ -1,3 +1,5 @@
+from pytmx import TiledTileset
+
 from Character.character import Character
 from Items.item import Item
 from Map.block import Block
@@ -48,44 +50,104 @@ class Level:
         return self.__name
 
     def createLevel(self):
+        possibleName = ["beton", "grass", "door", "elevator"]
+        possibleBlocs = [Concrete, Grass, Door, Elevator]
+        blocNumber = [0 for _ in range(4)]
 
+        data = self.__tmx.getData()
         # création des blocs de la map
-        blocs: list[list[int]] = self.__tmx.getData().layers[0].data
+        tilesets: list[TiledTileset] = data.tilesets
+        for i in range(len(tilesets)):
+            for y in range(len(possibleBlocs)):
+                if tilesets[i].name == possibleName[y]:
+                    blocNumber[y] = tilesets[i].firstgid
+
+        blocs: list[list[int]] = data.layers[0].data
+        tiledGildmap = data.tiledgidmap
+
         x, y = 0, 0
-
         for ligne in range(len(blocs)):
-            print(blocs[ligne])
             for colonne in range(len(blocs[ligne])):
-                match blocs[ligne][colonne]:
-                    # TODO: unifier pour que les codes soient les mêmes pour tt les fichiers
-                    case 1:  # beton
-                        self.addBlock(Concrete(Coordinate(x, y)))
+                bloc = blocs[ligne][colonne]
+                if bloc != 0:
+                    convertedBloc = tiledGildmap[bloc]
+                    for elements in tilesets:
+                        if elements.firstgid == convertedBloc:
+                            match elements.name:
+                                case "grass":
+                                    self.addBlock(Grass(Coordinate(x, y)))
+                                case "beton":
+                                    self.addBlock(Concrete(Coordinate(x, y)))
 
-                    case 2:  # élévator
-                        self.addTunnel(Door(Coordinate(x, y)))
+                                case "door":
+                                    self.addTunnel(Door(Coordinate(x, y)))
 
-                    case 14:  # herbe
-                        self.addBlock(Grass(Coordinate(x, y)))
-
-                    case 15:  # herbe
-                        self.addBlock(Grass(Coordinate(x, y)))
-
-                    case 19:  # herbe
-                        self.addBlock(Grass(Coordinate(x, y)))
-
-                    case 20:  # herbe
-                        self.addBlock(Grass(Coordinate(x, y)))
-
-                    case 22:  # porte
-                        self.addTunnel(Door(Coordinate(x, y)))
-
-                    case _:  # si c'est vide
-                        pass
+                                case "elevator":
+                                    self.addTunnel(Elevator(Coordinate(x, y)))
 
                 x += 32
             y += 32
             x = 0
-        print()
+
+        # print(data.gidmap)
+        # blocNumberCopy = blocNumber
+        # for i in range(len(blocNumber)):
+        #     # print(blocNumberCopy[i])
+        #     if len(data.gidmap[blocNumberCopy[i]]) > 0:
+        #         blocNumber.append(data.gidmap[blocNumberCopy[i]][0][0])
+        #     else:
+        #         blocNumber.append(None)
+        #
+        # for ligne in range(len(blocs)):
+        #     print(blocs[ligne])
+        #     for colonne in range(len(blocs[ligne])):
+        #
+        #         for i in range(len(blocNumber)):
+        #             if blocs[ligne][colonne] == blocNumber[i]:
+        #
+        #                 if i <= 1:
+        #                     # print(f"added a {possibleBlocs[i]} aux blocs")
+        #                     self.addBlock(possibleBlocs[i](Coordinate(x, y)))
+        #                 else:
+        #                     i
+        #                     print(colonne, end="\r")
+        #                     print()
+        #                     # print(f"added a {possibleBlocs[i]} aux elevator")
+        #                     self.addTunnel(possibleBlocs[i-1](Coordinate(x, y)))
+        #
+        #         # if blocs[ligne][colonne] == blocNumber[0]:
+        #         #     self.addBlock(Concrete(Coordinate(x, y)))
+        #         # elif blocs[ligne][colonne] == blocNumber[1]:
+        #         #     self.addBlock(Grass(Coordinate(x, y)))
+        #         #
+        #         # match blocs[ligne][colonne]:
+        #         #     # TODO: unifier pour que les codes soient les mêmes pour tt les fichiers
+        #         #
+        #         #     case 2:  # élévator
+        #         #         self.addTunnel(Door(Coordinate(x, y)))
+        #         #
+        #         #     # case 14:  # herbe
+        #         #     #
+        #         #     #
+        #         #     # case 15:  # herbe
+        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
+        #         #     #
+        #         #     # case 19:  # herbe
+        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
+        #         #     #
+        #         #     # case 20:  # herbe
+        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
+        #         #
+        #         #     case 22:  # porte
+        #         #         self.addTunnel(Door(Coordinate(x, y)))
+        #         #
+        #         #     case _:  # si c'est vide
+        #         #         pass
+        #
+        #         x += 32
+        #     y += 32
+        #     x = 0
+        # print()
 
         # création des hitbox de la map
         objets = self.__tmx.getObject()
