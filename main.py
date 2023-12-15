@@ -37,13 +37,13 @@ accueil.createLevel()
 # zzzz
 first_lvl = Level("un")
 first_lvl.Background = Image("assets/levels/fondecran1.png")
-first_lvl.MainCharacterSpawn = Coordinate(36, 515)
+first_lvl.MainCharacterSpawn = Coordinate(46, 515)
 first_lvl.setTmx("assets/map/map1.tmx")
 first_lvl.createLevel()
 
 second_level = Level("deux")
 second_level.Background = Image("assets/levels/fondecran2.png")
-second_level.MainCharacterSpawn = Coordinate(180, 450)
+second_level.MainCharacterSpawn = Coordinate(61, 353)
 second_level.setTmx("assets/map/map2.tmx")
 second_level.createLevel()
 
