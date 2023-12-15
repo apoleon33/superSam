@@ -44,7 +44,7 @@ first_lvl.createLevel()
 
 second_level = Level("deux")
 second_level.Background = Image("assets/levels/atrium.png")
-second_level.MainCharacterSpawn = Coordinate(110, 323)
+second_level.MainCharacterSpawn = Coordinate(170, 450)
 second_level.setTmx("assets/map/map2.tmx")
 second_level.createLevel()
 
