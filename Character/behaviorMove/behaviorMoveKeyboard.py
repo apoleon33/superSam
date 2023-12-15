@@ -10,4 +10,4 @@ class BehaviorMoveKeyboard(BehaviorMove):
         return (-1) * MAIN_CHARACTER_SPEED
 
     def jump(self) -> int:
-        return -25
+        return -20
