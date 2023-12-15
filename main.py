@@ -2,7 +2,6 @@ import pygame
 
 from Character.behaviorMove.behaviorMoveKeyboard import BehaviorMoveKeyboard
 from Character.mainCharacter import MainCharacter
-from Map.door import Door
 from Map.level import Level
 from Map.map import Map
 from System.game import Game
@@ -29,7 +28,7 @@ game.Camera = Coordinate(2, 0)
 
 mapstart = Level("tutoriel")
 mapstart.Background = Image("assets/levels/fondecran0.png")
-mapstart.MainCharacterSpawn = Coordinate(7, 704)
+mapstart.MainCharacterSpawn = Coordinate(392, 704)
 mapstart.setTmx("assets/map/mapstart.tmx")
 mapstart.createLevel()
 
@@ -38,7 +37,7 @@ accueil.createLevel()
 # zzzz
 first_lvl = Level("un")
 first_lvl.Background = Image("assets/levels/fondecran1.png")
-first_lvl.MainCharacterSpawn = Coordinate(120, 703)
+first_lvl.MainCharacterSpawn = Coordinate(36, 515)
 first_lvl.setTmx("assets/map/map1.tmx")
 first_lvl.createLevel()
 
@@ -78,7 +77,7 @@ travis = Image("assets/sounds/90210.mp3")
 music = MusicPlayer(travis)
 music.play()
 
-campus.printLevel()
+# campus.printLevel()
 
 while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)
