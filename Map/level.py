@@ -89,66 +89,6 @@ class Level:
             y += 32
             x = 0
 
-        # print(data.gidmap)
-        # blocNumberCopy = blocNumber
-        # for i in range(len(blocNumber)):
-        #     # print(blocNumberCopy[i])
-        #     if len(data.gidmap[blocNumberCopy[i]]) > 0:
-        #         blocNumber.append(data.gidmap[blocNumberCopy[i]][0][0])
-        #     else:
-        #         blocNumber.append(None)
-        #
-        # for ligne in range(len(blocs)):
-        #     print(blocs[ligne])
-        #     for colonne in range(len(blocs[ligne])):
-        #
-        #         for i in range(len(blocNumber)):
-        #             if blocs[ligne][colonne] == blocNumber[i]:
-        #
-        #                 if i <= 1:
-        #                     # print(f"added a {possibleBlocs[i]} aux blocs")
-        #                     self.addBlock(possibleBlocs[i](Coordinate(x, y)))
-        #                 else:
-        #                     i
-        #                     print(colonne, end="\r")
-        #                     print()
-        #                     # print(f"added a {possibleBlocs[i]} aux elevator")
-        #                     self.addTunnel(possibleBlocs[i-1](Coordinate(x, y)))
-        #
-        #         # if blocs[ligne][colonne] == blocNumber[0]:
-        #         #     self.addBlock(Concrete(Coordinate(x, y)))
-        #         # elif blocs[ligne][colonne] == blocNumber[1]:
-        #         #     self.addBlock(Grass(Coordinate(x, y)))
-        #         #
-        #         # match blocs[ligne][colonne]:
-        #         #     # TODO: unifier pour que les codes soient les mêmes pour tt les fichiers
-        #         #
-        #         #     case 2:  # élévator
-        #         #         self.addTunnel(Door(Coordinate(x, y)))
-        #         #
-        #         #     # case 14:  # herbe
-        #         #     #
-        #         #     #
-        #         #     # case 15:  # herbe
-        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
-        #         #     #
-        #         #     # case 19:  # herbe
-        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
-        #         #     #
-        #         #     # case 20:  # herbe
-        #         #     #     self.addBlock(Grass(Coordinate(x, y)))
-        #         #
-        #         #     case 22:  # porte
-        #         #         self.addTunnel(Door(Coordinate(x, y)))
-        #         #
-        #         #     case _:  # si c'est vide
-        #         #         pass
-        #
-        #         x += 32
-        #     y += 32
-        #     x = 0
-        # print()
-
         # création des hitbox de la map
         objets = self.__tmx.getObject()
         for object in objets:
