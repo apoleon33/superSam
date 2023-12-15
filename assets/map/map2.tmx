@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="41">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="43">
  <tileset firstgid="1" source="../blocks/beton/beton.tsx"/>
  <tileset firstgid="5" source="../blocks/tunnel/elevator/elevator2.tsx"/>
  <tileset firstgid="25" source="../blocks/tunnel/porte/door.tsx"/>
@@ -20,7 +20,7 @@
 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 1,0,0,0,0,0,1,0,0,0,0,40,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
 41,42,43,44,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 45,46,47,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
 49,50,51,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -68,5 +68,6 @@
   <object id="38" type="collision" x="192.527" y="353.093" width="31.2001" height="28.9171"/>
   <object id="39" type="collision" x="289.171" y="452.02" width="29.6781" height="27.3952"/>
   <object id="40" type="tunnel" x="2.28293" y="450.498" width="124.039" height="157.522"/>
+  <object id="41" type="collision" x="27.2123" y="417.255" width="98.7704" height="29.228"/>
  </objectgroup>
 </map>
