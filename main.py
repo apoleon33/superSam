@@ -44,19 +44,27 @@ first_lvl.createLevel()
 
 second_level = Level("deux")
 second_level.Background = Image("assets/levels/atrium.png")
-second_level.MainCharacterSpawn = Coordinate(0, 0)
+second_level.MainCharacterSpawn = Coordinate(110, 323)
 second_level.setTmx("assets/map/map2.tmx")
 second_level.createLevel()
 
 third_level = Level("trois")
 third_level.Background = Image("assets/levels/atrium.png")
-third_level.MainCharacterSpawn = Coordinate(0, 0)
+third_level.MainCharacterSpawn = Coordinate(105, 700)
 third_level.setTmx("assets/map/map3.tmx")
+third_level.createLevel()
+
+fourth_level = Level("quatre")
+fourth_level.Background = Image("assets/levels/atrium.png")
+fourth_level.MainCharacterSpawn = Coordinate(200, 600)
+fourth_level.setTmx("assets/map/map4.tmx")
+fourth_level.createLevel()
 
 campus.addLevel(0, 1, mapstart)
-campus.addLevel(1, 1, first_lvl)
-campus.addLevel(1, 0, second_level)
-campus.addLevel(2, 2, third_level)
+campus.addLevel(3, 1, first_lvl)
+campus.addLevel(2, 1, second_level)
+campus.addLevel(1, 1, third_level)
+campus.addLevel(4, 1, fourth_level)
 
 
 sami.Coordinate.Y, sami.Coordinate.X = mapstart.MainCharacterSpawn.Y, mapstart.MainCharacterSpawn.X
