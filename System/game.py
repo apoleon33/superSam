@@ -40,13 +40,6 @@ class Game:
         pygame.display.set_caption("Super Sam")
         pygame.key.set_repeat(1, 1)
 
-        # essai chargement carte
-        # tmx_data = self.__map.getLevel(self.__camera.X, self.__camera.Y).getTmx().getData()
-        # map_data = pyscroll.data.TiledMapData(tmx_data)
-        # map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__screen.get_size())
-
-        # self.group = pyscroll.PyscrollGroup(map_layer=map_layer)
-
         # optimisation
         self.actualBackground = None
         self.__alreadyLoadedImages = []
@@ -82,11 +75,11 @@ class Game:
         self.handleTunnelCollision()
         self.__mainCharacter.updateCoordinate()
 
-        if self.__mainCharacter.Coordinate.Y > HEIGHT:
+        if self.__mainCharacter.Coordinate.Y > HEIGHT or self.handleOffensiveCollision():
             return False
 
         self.displayGame(hitbox=HITBOX)
-        print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
+        # print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
         return True
 
@@ -124,6 +117,14 @@ class Game:
         for tunnel in self.__map.getLevel(self.__camera.X, self.__camera.Y).getTunnels():
             newTunnel = self.loadImage(tunnel.Sprite)
             self.__screen.blit(newTunnel, (tunnel.Coordinate.X, tunnel.Coordinate.Y))
+
+        # affichage des blocs offensifs (feux etc)
+        for offensiveBloc in self.__map.getLevel(self.__camera.X, self.__camera.Y).getOffensiveBlocks():
+            currentAnimation = self.loadImage(
+                image=offensiveBloc.getCurrentAnimation(),
+                rescale=[True, 32, 32]
+            )
+            self.__screen.blit(currentAnimation, (offensiveBloc.Coordinate.X, offensiveBloc.Coordinate.Y))
 
         if hitbox:
             displayHitBox()
@@ -233,6 +234,16 @@ class Game:
                 self.__mainCharacter.Coordinate.Y = self.__map.getLevel(self.__camera.X,
                                                                         self.__camera.Y).MainCharacterSpawn.Y
 
+    def handleOffensiveCollision(self) -> bool:
+        """
+        Vérification que le personnage principal n'a pas touché d'éléments antagonistes (feux etc)
+        :return: Selon que le personnage a touché un bloc antagoniste ou non
+        """
+        for hitbox in self.__map.getLevel(self.__camera.X, self.__camera.Y).getOffensiveHitboxes():
+            if hitbox.Rect.colliderect(self.__mainCharacter.getHitbox()):
+                return True
+        return False
+
     def changeLevel(self, tunnel: Tunnel):
         """
         Comment passe-t-on d'un niveau à l'autre, en se basant sur la position du personnage au moment ou il touche le tunnel, et du type de tunnel
@@ -253,7 +264,6 @@ class Game:
 
         self.__mainCharacter.Coordinate.X = self.__map.getLevel(self.__camera.X, self.__camera.Y).MainCharacterSpawn.X
         self.__mainCharacter.Coordinate.Y = self.__map.getLevel(self.__camera.X, self.__camera.Y).MainCharacterSpawn.Y
-
 
     @property
     def FPS(self) -> int:

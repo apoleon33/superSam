@@ -27,7 +27,7 @@ class AnimationSet:
         self.__frame = 0
         self.__jumpFrame = 0
 
-    def getMoveRightAnimation(self):
+    def getMoveRightAnimation(self) -> Image:
         self.__indexJump = 0
         self.__indexLeft = 0
 

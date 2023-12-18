@@ -6,7 +6,9 @@ from Map.block import Block
 from Map.concrete import Concrete
 from Map.door import Door
 from Map.elevator import Elevator
+from Map.fire import Fire
 from Map.grass import Grass
+from Map.offensiveBlock import OffensiveBlock
 from Map.tmxMap import TmxMap
 from Map.tunnel import Tunnel
 from hitbox import Hitbox
@@ -17,12 +19,16 @@ from coordinate import Coordinate
 class Level:
     __name: str
     __background: Image
+
     __items: [Item]
     __characters: [Character]
     __tunnels: [Tunnel]
-    __organisation: []
     __blocks: list[Block]
+    __offensiveBlocks: list[OffensiveBlock]
+
+    __organisation: []  # je sais même pas si je l'utilise
     __hitboxes: list[Hitbox]
+    __offensiveHitboxes: list[Hitbox]
     __mainCharacterSpawn: Coordinate
 
     __tmx: TmxMap
@@ -35,6 +41,8 @@ class Level:
         self.__background = Image("assets/levels/forest.jpg")  # à mettre: image de fond par défault
         self.__organisation = []
         self.__blocks = []
+        self.__offensiveBlocks = []
+        self.__offensiveHitboxes = []
         self.__hitboxes = []
         self.__mainCharacterSpawn = Coordinate(0, 0)
 
@@ -56,15 +64,10 @@ class Level:
         """
         possibleName = ["beton", "grass", "door", "elevator"]
         possibleBlocs = [Concrete, Grass, Door, Elevator]
-        blocNumber = [0 for _ in range(4)]
 
         data = self.__tmx.getData()
         # création des blocs de la map
         tilesets: list[TiledTileset] = data.tilesets
-        for i in range(len(tilesets)):
-            for y in range(len(possibleBlocs)):
-                if tilesets[i].name == possibleName[y]:
-                    blocNumber[y] = tilesets[i].firstgid
 
         blocs: list[list[int]] = data.layers[0].data
         tiledGildmap = data.tiledgidmap
@@ -89,15 +92,29 @@ class Level:
                                 case "elevator":
                                     self.addTunnel(Elevator(Coordinate(x, y)))
 
+                                case "fire":
+                                    self.addOffensiveBlock(Fire(Coordinate(x, y)))
+
                 x += 32
             y += 32
             x = 0
 
-        # création des hitbox de la map
+        # création des hitboxes de la map
         objets = self.__tmx.getObject()
         for object in objets:
             if object.type == "collision":
                 self.addHitbox(
+                    Hitbox(
+                        width=object.width,
+                        height=object.height,
+                        initialCoordinate=Coordinate(
+                            x=object.x,
+                            y=object.y
+                        )
+                    )
+                )
+            elif object.type == "fire":
+                self.addOffensiveHitbox(
                     Hitbox(
                         width=object.width,
                         height=object.height,
@@ -171,8 +188,14 @@ class Level:
     def addHitbox(self, hitbox: Hitbox):
         self.__hitboxes.append(hitbox)
 
+    def addOffensiveHitbox(self, hitbox: Hitbox):
+        self.__offensiveHitboxes.append(hitbox)
+
     def getHitboxes(self) -> list[Hitbox]:
         return self.__hitboxes
+
+    def getOffensiveHitboxes(self) -> list[Hitbox]:
+        return self.__offensiveHitboxes
 
     def setTmx(self, path: str):
         self.__tmx = TmxMap(path)
@@ -187,3 +210,9 @@ class Level:
     @MainCharacterSpawn.setter
     def MainCharacterSpawn(self, coodinate: Coordinate):
         self.__mainCharacterSpawn = coodinate
+
+    def addOffensiveBlock(self, offensiveBlock: Block):
+        self.__offensiveBlocks.append(offensiveBlock)
+
+    def getOffensiveBlocks(self) -> list[OffensiveBlock]:
+        return self.__offensiveBlocks
