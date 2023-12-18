@@ -57,8 +57,7 @@
   <object id="23" type="tunnel" x="1345.36" y="0" width="89.2429" height="159.774"/>
   <object id="25" type="collision" x="576.435" y="291.18" width="29.6259" height="27.0865"/>
   <object id="29" type="fire" x="578.036" y="257.851" width="27.8031" height="30.3443"/>
-  <object id="31" type="collision" x="1184.48" y="224.344" width="31.3815" height="31.3815"/>
-  <object id="32" type="collision" x="1216.53" y="319.824" width="30.0461" height="30.7138"/>
+  <object id="31" type="collision" x="1155.67" y="224.344" width="42.274" height="31.3815"/>
   <object id="33" type="collision" x="447.989" y="354.046" width="32.186" height="8.44883"/>
   <object id="34" type="collision" x="462.875" y="362.898" width="3.62093" height="19.7139"/>
  </objectgroup>
