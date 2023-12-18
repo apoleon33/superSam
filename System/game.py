@@ -86,6 +86,7 @@ class Game:
     def displayGame(self, hitbox=HITBOX):
         """
         Affichage du jeux, de ses mobs et de son fond
+        :type hitbox: si l'on veut afficher les hitboxes ou non
         :return: Rien
         """
 
@@ -98,6 +99,9 @@ class Game:
 
             for hitboxe in self.__map.getLevel(self.__camera.X, self.__camera.Y).getHitboxes():
                 pygame.draw.rect(self.__screen, (255, 0, 0), hitboxe.Rect)
+
+            for hitbox in self.__map.getLevel(self.__camera.X, self.__camera.Y).getOffensiveHitboxes():
+                pygame.draw.rect(self.__screen, (0, 0, 255), hitbox.Rect)
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
