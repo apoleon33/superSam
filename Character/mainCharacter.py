@@ -13,3 +13,4 @@ class MainCharacter(Character):
 
         moveAnimation.setImageFromDirectory("assets/character/sam", [8, 8, 7])
         super().__init__("Sam", moveAnimation)
+

@@ -31,6 +31,8 @@ class Character(ABC):
     __px: int
     __py: int
 
+    __hp: int
+
     def __init__(self, name: str, animationSet: AnimationSet) -> None:
         """
         Classe abstraite des mobs, agonistes comme antagonistes.
@@ -52,6 +54,8 @@ class Character(ABC):
 
         self.__py = 0
         self.__px = 0
+
+        self.__hp = 5
 
     def setBehaviorMove(self, behaviorMove: BehaviorMove) -> None:
         """
@@ -201,3 +205,11 @@ class Character(ABC):
     @IsInAir.setter
     def IsInAir(self, value: bool):
         self.__isInAir = value
+
+    @property
+    def LifePoint(self) -> int:
+        return self.__hp
+
+    @LifePoint.setter
+    def LifePoint(self, hp: int):
+        self.__hp = hp

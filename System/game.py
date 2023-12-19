@@ -76,7 +76,12 @@ class Game:
         self.__mainCharacter.updateCoordinate()
 
         if self.__mainCharacter.Coordinate.Y > HEIGHT or self.handleOffensiveCollision():
-            return False
+            self.__mainCharacter.Coordinate.X = self.__map.getLevel(self.__camera.X,
+                                                                    self.__camera.Y).MainCharacterSpawn.X
+            self.__mainCharacter.Coordinate.Y = self.__map.getLevel(self.__camera.X,
+                                                                    self.__camera.Y).MainCharacterSpawn.Y
+            if self.lose():
+                return False
 
         self.displayGame(hitbox=HITBOX)
         # print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
@@ -102,6 +107,9 @@ class Game:
 
             for hitbox in self.__map.getLevel(self.__camera.X, self.__camera.Y).getOffensiveHitboxes():
                 pygame.draw.rect(self.__screen, (0, 0, 255), hitbox.Rect)
+
+        def displayLifePoint():
+            pass
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
@@ -316,6 +324,11 @@ class Game:
 
         self.__alreadyLoadedPygameImages.append(loadedImage)
         return loadedImage
+
+    def lose(self) -> bool:
+        self.__mainCharacter.LifePoint -= 1
+        print(f"points de vie: {self.__mainCharacter.LifePoint}")
+        return self.__mainCharacter.LifePoint <= 0
 
     @property
     def Camera(self) -> Coordinate:
