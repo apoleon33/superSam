@@ -39,6 +39,8 @@ class Game:
         self.__screen = pygame.display.set_mode((self.__map.Width, self.__map.Height))
         pygame.display.set_caption("Super Sam")
         pygame.key.set_repeat(1, 1)
+        pygame.font.init()
+        self.my_font = pygame.font.SysFont('Comic Sans MS', 30)
 
         # optimisation
         self.actualBackground = None
@@ -109,7 +111,8 @@ class Game:
                 pygame.draw.rect(self.__screen, (0, 0, 255), hitbox.Rect)
 
         def displayLifePoint():
-            pass
+            text_surface = self.my_font.render(f"points de vies: {self.__mainCharacter.LifePoint}", False, (0, 0, 0))
+            self.__screen.blit(text_surface, (0, 0))
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
@@ -155,6 +158,7 @@ class Game:
             )
         self.__mainCharacter.setHitbox(samySprite.get_width(), samySprite.get_height())
         self.__screen.blit(samySprite, (self.__mainCharacter.Coordinate.X, self.__mainCharacter.Coordinate.Y))
+        displayLifePoint()
 
     def setStory(self, story: Story):
         pass
