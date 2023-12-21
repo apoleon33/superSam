@@ -25,6 +25,8 @@ class Game:
     __alreadyLoadedImages: [Image]
     __alreadyLoadedPygameImages: [pygame.surface.Surface]
 
+    __timer: float
+
     def __init__(self, carte: Map, mainCharacter: MainCharacter):
         self.__map = carte
         self.__mainCharacter = mainCharacter
@@ -33,6 +35,7 @@ class Game:
         self.__story = Story()
         self.__control = Control()
         self.__camera = Coordinate(0, 0)
+        self.__timer = 0
 
         # on initialise pygame
         pygame.init()
@@ -86,6 +89,7 @@ class Game:
                 return False
 
         self.displayGame(hitbox=HITBOX)
+        if int(self.__timer) > 120: return False
         # print(f"x: {self.__mainCharacter.Coordinate.X} y: {self.__mainCharacter.Coordinate.Y}")
         pygame.display.update()
         return True
@@ -111,8 +115,11 @@ class Game:
                 pygame.draw.rect(self.__screen, (0, 0, 255), hitbox.Rect)
 
         def displayLifePoint():
-            text_surface = self.my_font.render(f"points de vies: {self.__mainCharacter.LifePoint}", False, (255, 255, 255))
+            text_surface = self.my_font.render(f"points de vies: {self.__mainCharacter.LifePoint}", True,
+                                               (255, 255, 255))
+            timer_surface = self.my_font.render(f"{int(self.__timer)}s", True, (255, 255, 255))
             self.__screen.blit(text_surface, (0, 0))
+            self.__screen.blit(timer_surface, (0, 32))
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
 
@@ -341,3 +348,11 @@ class Game:
     @Camera.setter
     def Camera(self, camera: Coordinate) -> None:
         self.__camera = camera
+
+    @property
+    def Timer(self) -> float:
+        return self.__timer
+
+    @Timer.setter
+    def Timer(self, timer: float):
+        self.__timer = timer

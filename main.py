@@ -66,7 +66,6 @@ final_level.MainCharacterSpawn = Coordinate(150, 160)
 final_level.setTmx("assets/map/mapfinal.tmx")
 final_level.createLevel()
 
-
 campus.addLevel(0, 2, mapstart)
 campus.addLevel(1, 2, first_lvl)
 campus.addLevel(1, 1, second_level)
@@ -85,17 +84,20 @@ travis = Image("assets/sounds/90210.mp3")
 music = MusicPlayer(travis)
 music.play()
 
-
 heart = Image("assets/sounds/HeartOfCourage.mp3")
 
+# if campus != Map(3, 0):
+# music.play()
+# else:
+# music.changeFile(heart)
+# music.play()
 
-#if campus != Map(3, 0):
-    #music.play()
-#else:
-    #music.changeFile(heart)
-    #music.play()
+timer = 0
 
 while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)
+    timer += 1 / game.FPS
+    game.Timer = timer
+    print(f"tremps écoulé: {int(timer)} s")
 
 print("game over!")
