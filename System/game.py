@@ -111,7 +111,7 @@ class Game:
                 pygame.draw.rect(self.__screen, (0, 0, 255), hitbox.Rect)
 
         def displayLifePoint():
-            text_surface = self.my_font.render(f"points de vies: {self.__mainCharacter.LifePoint}", False, (0, 0, 0))
+            text_surface = self.my_font.render(f"points de vies: {self.__mainCharacter.LifePoint}", False, (255, 255, 255))
             self.__screen.blit(text_surface, (0, 0))
 
         actualLevel = self.__map.getLevel(self.__camera.X, self.__camera.Y)
