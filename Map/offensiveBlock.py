@@ -1,3 +1,4 @@
+import random
 from abc import ABC
 
 from Map.block import Block
@@ -8,7 +9,6 @@ from image import Image
 
 class OffensiveBlock(Block, ABC):
     __animationSet: AnimationSet
-
 
     def __init__(self, texture: Image, width: int, height: int, coordinate: Coordinate):
         """
@@ -32,6 +32,9 @@ class OffensiveBlock(Block, ABC):
             directory=directory,
             nbImage=[nbImages, 0, 0]
         )
+
+        for i in range(random.randint(0, nbImages)):  # on aléatoirise les animations
+            self.getCurrentAnimation()
 
     @property
     def Animation(self) -> AnimationSet:
