@@ -8,6 +8,7 @@ from Map.door import Door
 from Map.elevator import Elevator
 from Map.fire import Fire
 from Map.grass import Grass
+from Map.laurence import Laurence
 from Map.offensiveBlock import OffensiveBlock
 from Map.tmxMap import TmxMap
 from Map.tunnel import Tunnel
@@ -94,6 +95,9 @@ class Level:
 
                                 case "fire":
                                     self.addOffensiveBlock(Fire(Coordinate(x, y)))
+
+                                case "laurence":
+                                    self.addBlock(Laurence(Coordinate(x, y)))
 
                 x += 32
             y += 32
