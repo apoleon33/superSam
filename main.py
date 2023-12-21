@@ -99,4 +99,3 @@ while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)
 
 print("game over!")
-...
