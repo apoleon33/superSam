@@ -24,14 +24,14 @@ campus = Map(WIDTH, HEIGHT)
 game = Game(campus, sami)
 game.Gravity = GRAVITY
 
-game.Camera = Coordinate(0, 3)
+game.Camera = Coordinate(2, 0)
 
 mapstart = Level("tutoriel")
 mapstart.Background = Image("assets/levels/fondecran0.png")
-mapstart.MainCharacterSpawn = Coordinate(150, 160)
+mapstart.MainCharacterSpawn = Coordinate(392, 704)
 mapstart.setTmx("assets/map/mapstart.tmx")
 mapstart.createLevel()
-#392,704
+# 392,704
 
 accueil.setTmx("assets/map/map1.tmx")
 accueil.createLevel()
@@ -59,12 +59,13 @@ fourth_level.Background = Image("assets/levels/fondecran4.png")
 fourth_level.MainCharacterSpawn = Coordinate(150, 704)
 fourth_level.setTmx("assets/map/map4.tmx")
 fourth_level.createLevel()
-#150,704
+# 150,704
 final_level = Level("final")
 final_level.Background = Image("assets/levels/fondecran5.png")
 final_level.MainCharacterSpawn = Coordinate(150, 160)
 final_level.setTmx("assets/map/mapfinal.tmx")
 final_level.createLevel()
+
 
 campus.addLevel(0, 2, mapstart)
 campus.addLevel(1, 2, first_lvl)
@@ -72,7 +73,6 @@ campus.addLevel(1, 1, second_level)
 campus.addLevel(2, 1, third_level)
 campus.addLevel(2, 0, fourth_level)
 campus.addLevel(3, 0, final_level)
-
 
 sami.Coordinate.Y, sami.Coordinate.X = mapstart.MainCharacterSpawn.Y, mapstart.MainCharacterSpawn.X
 
@@ -85,7 +85,15 @@ travis = Image("assets/sounds/90210.mp3")
 music = MusicPlayer(travis)
 music.play()
 
-# campus.printLevel()
+
+heart = Image("assets/sounds/HeartOfCourage.mp3")
+
+
+#if campus != Map(3, 0):
+    #music.play()
+#else:
+    #music.changeFile(heart)
+    #music.play()
 
 while game.play() is True:  # on fait tourner le jeux
     clock.tick(game.FPS)
